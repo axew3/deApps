@@ -1,0 +1,735 @@
+<!DOCTYPE html">
+<html>
+<head>
+<!--  C 2025 axew3.com - MIT License
+* - Generate crypto key pairs
+* - Encrypt/Decrypt
+* - The most important part of this code was taken from MDN examples at https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API -->
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>myw3PGP-html simple Web Crypto - Crypt/Decrypt and Generate crypto key pairs</title>
+<style>
+html,body{ font-family: Helvetica,Verdana;
+padding:0;margin:0;
+}
+
+.copyleft{
+  /*align:right;
+  text-align:right;*/
+  font-size:1.1rem;
+  background-color:#FFF;
+  padding:10px 20px;
+}
+.copyleft1{
+  align:left;
+  text-align:left;
+  background-color:#F1F1F1;
+  padding:10px 20px;
+}
+.copyleft2{
+  align:right;
+  text-align:right;
+  background-color:#F1F1F1;
+  padding:10px 20px;
+}
+
+.wrapGenCryptoKeys{
+  display: flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items:center;
+}
+
+#w3GenCryptoKeys{ margin:20px; padding:15px; font-size: 2.8rem; word-wrap:nowrap; font-weight:900; }
+.result{ max-width:80%;overflow-x:scroll;margin:20px;background-color:#000;color:#FFF; }
+.explain{ margin:0 0 10px 0;padding:10px;background-color:#000;color:#FFF;font-size:1.0rem; }
+textarea{ width:100%; min-height:100px;}
+.keysdown {
+  background-color:#3B4568;
+  border-radius:8px;
+  border-style:none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  font-size:2.5rem;
+  font-weight:900;
+  margin:0;
+  padding:20px;
+  text-align:center;
+  text-decoration:none;
+  margin:20px 40px;
+}
+
+#w3downloadPublic_CKeys, #w3downloadPrivate_CKeys, #w3downloadPubPriv_CKeys{
+  color:#FFF;
+  text-decoration: none;
+}
+
+#w3downloadPubPriv_CKeys:hover,
+#w3downloadPubPriv_CKeys:focus,
+#w3downloadPrivate_CKeys:hover,
+#w3downloadPrivate_CKeys:focus,
+#w3downloadPublic_CKeys:hover,
+#w3downloadPublic_CKeys:focus {
+ color: #4BEA43;
+ text-decoration: none;
+}
+
+.interface{
+  display: flex;
+  flex-direction: row;
+  justify-content:center;
+  align-items:center;
+}
+
+#generateInterface,#cryptInterface,#decryptInterface{
+  font-size:2.5rem;
+  background-color:#333;
+  padding:20px;
+  margin:10px;
+  color:#fff;
+  border:2px solid #696969;
+}
+
+#wrapGenCryptoKeys{
+ display:none;
+}
+
+.wrapEncrypt, .wrapDecrypt{
+  display:flex;
+  flex-direction: column;
+  justify-content:center;
+  align-items:center;
+  background-color:#F1F1F1;
+  margin:0;
+  padding:0;
+}
+
+.wrap0-cryptDecryptControls{
+  display: inline-block;
+  justify-content:center;
+  align-items:center;
+
+  /*background-color:#FFF;*/
+  padding:15px;
+  margin:0;
+  font-weight:900;
+}
+.wrap1-cryptDecryptControls{
+ display: inline-block;
+  justify-content:center;
+  align-items:center;
+  margin:0;
+  width:100%;
+  border-top:5px solid #333;
+ /*background-color:#F1F1F1;*/
+}
+
+.message-control,.ciphertext{
+  background-color:#FFF;
+}
+#rsa-oaep-message{
+ font-size:20px;
+}
+
+.decryptedPanel{
+ display:inline-block;
+ width:90%;
+}
+.decrypted{
+ background-color:#FFF;
+ padding: 10px;
+ margin:20px;
+ display: inline-block;
+ width:auto;
+ font-size:2.3rem;
+ border:2px solid #000;
+}
+.decrypted-value{
+ background-color:#FFF;
+ display: inline-block;
+ width:auto;
+ font-size:2.2rem;
+ font-weight:400;
+ padding:10px;
+}
+.buttonC,input[type=file],input[type=button], input[type=submit], input[type=reset]{
+  background-color:#3B4568;
+  border-radius:8px;
+  border-style:none;
+  box-sizing: border-box;
+  color: #FFFFFF;
+  font-size:2.3rem;
+  font-weight:900;
+  padding:20px;
+  text-align:center;
+  text-decoration:none;
+  margin:20px 0px;
+}
+#w3downloadPrivate_CKeys:hover,
+#w3downloadPrivate_CKeys:focus,
+#w3downloadPublic_CKeys:hover,
+#w3downloadPublic_CKeys:focus,
+.encrypt-button:hover,
+.encrypt-button:focus,
+{
+ color: #4BEA43;
+ text-decoration: none;
+}
+
+.buttonC:hover,input:hover,input:focus
+ {
+ color: #4BEA43;
+ text-decoration: none;
+}
+.pText{
+ padding:10px 15px;
+}
+.cText{
+  font-size:2.0rem;
+  font-weight:900;
+}
+#w3downloadEncryptedMsg{
+  font-size:3.0rem;
+  font-weight:900;
+}
+.cCenter{
+  text-align:center;
+  padding:15px 0;
+}
+.cCenterB{
+  text-align:center;
+  padding:15px 0;
+  margin-top:35px
+}
+.ciphertext,.message-control{
+  padding:15px;
+}
+</style>
+<script>
+
+/*
+*
+* C 2025 axew3.com - MIT License
+* - Generate crypto key pairs
+* - Encrypt/Decrypt
+*/
+
+ var ciphertext,myprivKey,mypubKey;
+ var myPubPrivKey='';
+
+/*
+Convert an ArrayBuffer into a string
+*/
+function ab2str(buf) {
+  return String.fromCharCode.apply(null, new Uint8Array(buf));
+}
+
+/*
+START Export the given key and write it into the "exported-key" space.
+TODO; these two Should may be a single function
+*/
+async function exportCryptoKeyPrivate(key) {
+  var exported = await window.crypto.subtle.exportKey("pkcs8", key);// format for Private key
+  // to import https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#pkcs_8
+  let exportedAsString = ab2str(exported);
+  let exportedAsBase64 = window.btoa(exportedAsString);
+  let pemExported = '-----BEGIN PRIVATE KEY-----\n'+exportedAsBase64+'\n-----END PRIVATE KEY-----';
+  myPubPrivKey = myPubPrivKey+=pemExported;
+  let pemEx = new Blob([myPubPrivKey], {type: 'text/plain'});
+  let txtFileUrl = window.URL.createObjectURL(pemEx);
+// trick to detect if exportCryptoKeyPublic fullfilled already and set only when myPubPrivKey contain both private and public keys
+// so to have an unique buffer with priv and pub key without having to recode promises
+  if(myPubPrivKey.includes('BEGIN PUBLIC KEY')){
+    document.getElementById("w3downloadPubPriv_CKeys").setAttribute("style", "display:block;");
+    document.getElementById("w3downloadPubPriv_CKeys").setAttribute("href", txtFileUrl);
+  }
+
+  //document.getElementById("w3downloadPrivate_CKeys").setAttribute("href", txtFileUrl);
+  document.getElementById("my_privateKey").insertAdjacentText('afterbegin', pemExported);
+}
+
+async function exportCryptoKeyPublic(key) {
+  var exported = await window.crypto.subtle.exportKey("spki", key);// format for Public key
+  // to import https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/importKey#subjectpublickeyinfo
+  let exportedAsString = ab2str(exported);
+  let exportedAsBase64 = window.btoa(exportedAsString);
+  let pemExported = '-----BEGIN PUBLIC KEY-----\n'+exportedAsBase64+'\n-----END PUBLIC KEY-----';
+  myPubPrivKey = myPubPrivKey+=pemExported;
+  let pemEx = new Blob([myPubPrivKey], {type: 'text/plain'});
+  let txtFileUrl = window.URL.createObjectURL(pemEx);
+// trick to detect if exportCryptoKeyPrivate fullfilled already and set only when myPubPrivKey contain both private and public keys
+// so to have an unique buffer with priv and pub key without having to recode promises
+  if(myPubPrivKey.includes('BEGIN PRIVATE KEY')){
+    document.getElementById("w3downloadPubPriv_CKeys").setAttribute("style", "display:block;");
+    document.getElementById("w3downloadPubPriv_CKeys").setAttribute("href", txtFileUrl);
+  }
+
+  //document.getElementById("w3downloadPublic_CKeys").setAttribute("href", txtFileUrl);
+  document.getElementById("my_publicKey").insertAdjacentText('afterbegin', pemExported);
+}
+/*
+END Export the given key and write it into the "exported-key" space.
+*/
+
+function w3GenCryptoKeys(){
+    window.crypto.subtle.generateKey(
+    {
+    name: "RSA-OAEP",
+    // Consider using a 4096-bit key for systems that require long-term security
+    modulusLength: 4096,
+    publicExponent: new Uint8Array([1, 0, 1]),
+    hash: "SHA-256",
+    },
+    true,
+    ["encrypt", "decrypt"] ).then((keyPair) => {
+
+    // reset before the myPubPrivKey or will add value to existent if already created
+    myPubPrivKey = '';
+    // reset p text of the (if there is) previous click to generate keys
+    document.getElementById('my_privateKey').innerHTML = '';
+    document.getElementById('my_publicKey').innerHTML = '';
+    exportCryptoKeyPublic(keyPair.publicKey);
+    exportCryptoKeyPrivate(keyPair.privateKey);
+    console.log(keyPair.publicKey);
+    console.log(keyPair.privateKey);
+  });
+}
+
+(() => {
+});
+
+/* ABOUT ENCRYPT DECRYPT ONLY */
+
+/*
+Convert a string into an ArrayBuffer
+from https://developers.google.com/web/updates/2012/06/How-to-convert-ArrayBuffer-to-and-from-String
+*/
+function str2ab(str) {
+  const buf = new ArrayBuffer(str.length);
+  const bufView = new Uint8Array(buf);
+  for (let i = 0, strLen = str.length; i < strLen; i++) {
+    bufView[i] = str.charCodeAt(i);
+  }
+  return buf;
+}
+  /*
+  Convert an ArrayBuffer into a string
+  from https://developers.google.com/web/updates/2012/06/How-to-convert-ArrayBuffer-to-and-from-String
+  */
+  function ab2str(buf) {
+    return String.fromCharCode.apply(null, new Uint8Array(buf));
+  }
+
+/*
+Import a PEM encoded RSA private key, to use for RSA-PSS signing.
+Takes a string containing the PEM encoded key, and returns a Promise
+that will resolve to a CryptoKey representing the private key.
+*/
+function importPrivateKey(pem) {
+  // fetch the part of the PEM string between header and footer
+  const pemHeader = "-----BEGIN PRIVATE KEY-----";
+  const pemFooter = "-----END PRIVATE KEY-----";
+  const pemContents = pem.substring(
+    pemHeader.length,
+    pem.length - pemFooter.length - 1,
+  );
+  // base64 decode the string to get the binary data
+  const binaryDerString = window.atob(pemContents);
+  // convert from a binary string to an ArrayBuffer
+  const binaryDer = str2ab(binaryDerString);
+
+  return window.crypto.subtle.importKey(
+    "pkcs8",
+    binaryDer,
+    {
+      name: "RSA-OAEP",
+      hash: "SHA-256",
+    },
+    true,
+    ["decrypt"],
+  );
+}
+
+function importRsaKey(pem) {
+  // fetch the part of the PEM string between header and footer
+  const pemHeader = "-----BEGIN PUBLIC KEY-----";
+  const pemFooter = "-----END PUBLIC KEY-----";
+  const pemContents = pem.substring(
+    pemHeader.length,
+    pem.length - pemFooter.length - 1,
+  );
+  // base64 decode the string to get the binary data
+  const binaryDerString = window.atob(pemContents);
+  // convert from a binary string to an ArrayBuffer
+  const binaryDer = str2ab(binaryDerString);
+
+  return window.crypto.subtle.importKey(
+    "spki",
+    binaryDer,
+    {
+      name: "RSA-OAEP",
+      hash: "SHA-256",
+    },
+    true,
+    ["encrypt"],
+  );
+}
+
+    function getMessageEncoding() {
+    const messageBox = document.querySelector("#rsa-oaep-message");
+    let message = messageBox.value;
+
+    if (message == ''){ alert('Please add the text to be encrypted in the appropriate field'); return; }
+
+    //const byteSize = messageBox.value.length;
+    const byteSize = str => new Blob([str]).size;
+
+    // Max 512 bytes for RSA-OAEP 4096 so the maximum message size is ( 512-42(42 is the padding)=470 ) 470 bytes
+    if(byteSize(messageBox.value) > 470) { alert('The message to be encrypted is too long.\nBytes: '+byteSize(messageBox.value)+'\nMax allowed: 470'); return false; }
+
+    let enc = new TextEncoder();
+
+    return enc.encode(message);
+  }
+
+  /*
+  Get the encoded message, encrypt it and display a representation
+  of the ciphertext in the "Ciphertext" element.
+  */
+  async function encryptMessage(key) {
+
+    let encoded = getMessageEncoding(); // max 470 byte
+    if( !encoded ){ return; }
+
+    if (key == null){ alert('Please load your Public key'); return; }
+
+    ciphertext = await window.crypto.subtle.encrypt(
+      {
+        name: "RSA-OAEP"
+      },
+      key,
+      encoded
+    );
+
+   buffer = ciphertext;
+   const crypted = new Blob([ciphertext], {type: 'text/plain'});
+   let cryptedU = window.URL.createObjectURL(crypted);
+
+  /*console.log('txtBlob');
+  console.log(crypted);*/
+  document.getElementById("w3downloadEncryptedMsg").setAttribute("style", "display:block;");
+  document.getElementById("w3downloadEncryptedMsg").setAttribute("href", cryptedU);
+
+    const ciphertextValue = document.querySelector(".ciphertext-value");
+    ciphertextValue.classList.add('fade-in');
+    ciphertextValue.addEventListener('animationend', () => {
+      ciphertextValue.classList.remove('fade-in');
+    }, { once: true });
+    ciphertextValue.textContent = `${buffer}...[${ciphertext.byteLength} bytes total]`;
+    //ciphertextValue.textContent = `${buffer}...[${ciphertext.byteLength} bytes total]`;
+  }
+
+  /*
+  Fetch the ciphertext and decrypt it.
+  Write the decrypted message into the "Decrypted" box.
+  */
+  async function decryptMessage(key) {
+
+    /*console.log('ciphertext');
+    console.log(ciphertext);*/
+
+    if (key == null){ alert('Please load your Private key'); return; }
+    if (ciphertext == null){ alert('Please encrypt the text first\nor upload a file to decrypt using the\nUpload to decrypt button.'); return; }
+
+    let decrypted = await window.crypto.subtle.decrypt(
+      {
+        name: "RSA-OAEP"
+      },
+      key,
+      ciphertext
+    );
+
+    let dec = new TextDecoder();
+    const decryptedValue = document.querySelector(".decrypted-value");
+    decryptedValue.classList.add('fade-in');
+    decryptedValue.addEventListener('animationend', () => {
+      decryptedValue.classList.remove('fade-in');
+    }, { once: true });
+    decryptedValue.textContent = dec.decode(decrypted);
+  }
+
+/* END ABOUT ENCRYPT DECRYPT ONLY */
+
+</script>
+
+</head>
+<body>
+
+<div class="copyleft">
+ <div class="copyleft1">Note: most of the cryptographic JS code was taken from MDN at <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API" target="_blank">MDN Web_Crypto_API</a>
+ <div class="copyleft2">&copy 2025 <a href="https://axew3.com" target="_blank">axew3.com</a> - MIT License</div>
+</div>
+
+<div class="interface">
+  <button id="cryptInterface">Encrypt</button>
+  <button id="decryptInterface">Decrypt</button>
+  <button id="generateInterface">Generate Keys</button>
+</div>
+
+<div class="explain">
+Web Crypto<br />name: "RSA-OAEP"<br />
+hash: "SHA-256" 4096-bit
+</div>
+
+<!-- START GENERATE KEYS HTML -->
+
+<div id="wrapGenCryptoKeys" class="wrapGenCryptoKeys">
+
+<button id="w3GenCryptoKeys" onclick="w3GenCryptoKeys()">Generate Web Crypto key pairs</button>
+
+<h2 class="keysdown"><a href="" target="_blank" id="w3downloadPubPriv_CKeys" style="width:350px;font-weight:900;" download="my_Public_Private_Keys.txt">Download Public and Private key</a>
+</h2>
+<!--<h2 class="keysdown"><a href="" target="_blank" id="w3downloadPublic_CKeys" style="width:350px;font-weight:900;" download="my_Public_Key.txt">Download Public key</a>
+</h2>
+<h2 class="keysdown"><a href="" target="_blank" id="w3downloadPrivate_CKeys" style="width:350px;font-weight:900;" download="my_Private_Key.txt">Download Private key</a>
+</h2>-->
+
+<div class="result">
+<p id="my_privateKey"></p>
+<p id="my_publicKey"></p>
+</div>
+
+</div>
+<!-- END GENERATE KEYS HTML -->
+
+<!-- START ENCRYPT HTML -->
+<div id="wrapEncrypt" class="wrapEncrypt">
+
+<div class="wrap0-cryptDecryptControls">
+<form id="filesLoad" method="post" enctype="multipart/form-data" style="margin:0;padding:0;">
+<div class="cCenter"><span class="cText">Load secret keys</span><br /><input class="buttonC" type="file" id="myPubPrivKeyTXT" name="myPubPrivKeyTXT" accept=".txt, text/txt, image/png, image/jpeg" /></div>
+<!--
+<div class="cCenter"><span class="cText">Load Public key</span><br /><input class="buttonC" type="file" id="myPublicKeyTXT" name="myPublicKeyTXT" accept=".txt, text/txt, image/png, image/jpeg" /></div>
+<div class="cCenter"><span class="cText">Load Private key</span><br /><input class="buttonC" type="file" id="myPrivateKeyTXT" name="myPrivateKeyTXT" accept=".txt, text/txt, image/png, image/jpeg" /></div>
+-->
+<div class="cCenterB"><span class="cText">Load encrypted file</span><br /><input class="buttonC" type="file" id="myCryptedFile" name="myCryptedFile" accept=".txt, text/txt, image/png, image/jpeg" /></div>
+</form>
+     <div class="decrypted">
+      <b>Decrypted message:</b>
+      <br /><span class="decrypted-value"></span>
+     </div>
+</div>
+
+<!--<div class="decryptedPanel">
+      <div class="decrypted">
+      <b>Decrypted message:</b>
+      <br /><span class="decrypted-value"></span>
+      </div></div>-->
+
+
+  <div class="wrap1-cryptDecryptControls">
+            <div class="message-control">
+              <div class="cText pText">Enter message to encrypt:</div>
+              <textarea id="rsa-oaep-message" name="message"></textarea>
+            </div>
+            <div class="ciphertext">
+              <input class="encrypt-button" type="button" value="Encrypt" />
+              &nbsp; &nbsp; &nbsp;<input class="decrypt-button" type="button" value="Test decrypt" />
+              &nbsp; &nbsp; &nbsp;<a href="" target="_blank" id="w3downloadEncryptedMsg" class="cText" style="min-width:350px;font-weight:900;" download="w3mypgp_encryptedMsg.txt">Download encrypted message</a>
+              <br />
+              <br />
+              <b>Ciphertext:</b><span class="ciphertext-value"></span>
+              <br /><br />
+
+            </div>
+
+
+    </div><!-- END wrap-cryptDecryptControls -->
+
+</div><!-- END ENCRYPT HTML -->
+
+<!-- START DECRYPT HTML -->
+<!--
+<div id="wrapDecrypt" class="wrapDecrypt">
+</div>-->
+
+<!-- END DECRYPT HTML -->
+
+<script>
+
+/* Display html page mode */
+document.getElementById("generateInterface").addEventListener("click", function (e) {
+  document.getElementById("wrapEncrypt").setAttribute("style", "display:none;");
+  document.getElementById("wrapGenCryptoKeys").setAttribute("style", "display:flex;");
+  this.setAttribute("style", "background-color:#000;");
+  document.getElementById("cryptInterface").setAttribute("style", "background-color:#333;");
+  document.getElementById("decryptInterface").setAttribute("style", "background-color:#333;");
+});
+document.getElementById("cryptInterface").addEventListener("click", function (e) {
+  document.getElementById("wrapGenCryptoKeys").setAttribute("style", "display:none;");
+  document.querySelector(".wrap1-cryptDecryptControls").setAttribute("style", "inline-block;");
+  document.querySelector(".cCenterB").setAttribute("style", "display:none;");
+  document.getElementById("wrapEncrypt").setAttribute("style", "display:flex;");
+  this.setAttribute("style", "background-color:#000;");
+  document.getElementById("generateInterface").setAttribute("style", "background-color:#333;");
+  document.getElementById("decryptInterface").setAttribute("style", "background-color:#333;");
+});
+document.getElementById("decryptInterface").addEventListener("click", function (e) {
+  document.getElementById("wrapGenCryptoKeys").setAttribute("style", "display:none;");
+  document.querySelector(".wrap1-cryptDecryptControls").setAttribute("style", "display:none;");
+  document.querySelector(".cCenterB").setAttribute("style", "display:block;");
+  document.getElementById("wrapEncrypt").setAttribute("style", "display:flex;");
+  this.setAttribute("style", "background-color:#000;");
+  document.getElementById("generateInterface").setAttribute("style", "background-color:#333;");
+  document.getElementById("cryptInterface").setAttribute("style", "background-color:#333;");
+});
+
+/* END Display html page mode */
+
+/* START CODE FOR ENCRYPT DECRYPT */
+
+document.getElementById("myPubPrivKeyTXT").addEventListener("change", getPrivPubKey);
+//document.getElementById("myPublicKeyTXT").addEventListener("change", getPubKey);
+//document.getElementById("myPrivateKeyTXT").addEventListener("change", getPrivKey);
+document.getElementById("myCryptedFile").addEventListener("change", getCryptedDisplay);
+
+
+const fileInputPubK = document.querySelector('input[name="myPublicKeyTXT"]');
+const fileInputPrivK = document.querySelector('input[name="myPrivateKeyTXT"]');
+const fileInputToDecrypt = document.querySelector('input[name="myCryptedFile"]');
+
+const content = document.querySelector(".content");
+
+    const encryptButton = document.querySelector(".encrypt-button");
+    encryptButton.addEventListener("click", () => {
+      /*console.log('mypubKey');
+      console.log(mypubKey);*/
+      encryptMessage(mypubKey);
+    });
+
+    const decryptButton = document.querySelector(".decrypt-button");
+    decryptButton.addEventListener("click", () => {
+      /*console.log('myprivKey');
+      console.log(myprivKey);*/
+      decryptMessage(myprivKey);
+    });
+
+function getCryptedDisplay() {
+  const file = fileInputToDecrypt.files[0];
+
+   if(!file){  return; }
+
+  const reader = new FileReader();
+  cipher = reader.readAsArrayBuffer(file);
+
+  reader.addEventListener("loadend", () => {
+    ciphertext = reader.result;
+    decryptMessage(myprivKey);
+    console.log(reader.result);
+  });
+}
+
+function getPrivPubKey(){
+
+  const fileInputPubPrivK = document.querySelector('input[name="myPubPrivKeyTXT"]');
+  const file = fileInputPubPrivK.files[0];
+
+   if(!file){  return; }
+  const reader = new FileReader();
+  let k = reader.readAsText(file);
+
+    reader.addEventListener("loadend", () => {
+    //console.log(reader.result);
+    let kp = reader.result.trim();
+    let pubStart = kp.split('-----BEGIN PUBLIC KEY-----');
+    let privStart = kp.split('-----BEGIN PRIVATE KEY-----');
+    let myprivKeyRes,mypubKeyRes;
+
+  if(privStart[0] == ''){
+   myprivKeyRes = pubStart[0];
+
+   let pubKey = privStart[1].split('-----END PRIVATE KEY-----');
+   mypubKeyRes = pubKey[1];
+  } else {
+   mypubKeyRes = privStart[0];
+
+   let privKey = pubStart[1].split('-----END PUBLIC KEY-----');
+   myprivKeyRes = privKey[1];
+  }
+
+    let promisePubKey = Promise.resolve(importRsaKey(mypubKeyRes));
+    promisePubKey.then((value) => {
+    /*console.log('mypubKey value');
+    console.log(value);*/
+     mypubKey = value;
+    });
+
+    let promisePKey = Promise.resolve(importPrivateKey(myprivKeyRes));
+    promisePKey.then((value) => {
+     /*console.log('myprivKey');
+     console.log(value);*/
+     myprivKey = value;
+    });
+
+  });
+}
+
+
+function getPrivKey() {
+  const file = fileInputPrivK.files[0];
+   if(!file){  return; }
+
+  const reader = new FileReader();
+  let myprivateKey = reader.readAsText(file);
+
+    reader.addEventListener("loadend", () => {
+    let promisePKey = Promise.resolve(importPrivateKey(reader.result));
+    promisePKey.then((value) => {
+     /*console.log('myprivKey');
+     console.log(value);*/
+     myprivKey = value;
+    });
+  });
+}
+
+function getPubKey() {
+
+  const file = fileInputPubK.files[0];
+   if(!file){ return; }
+
+  const reader = new FileReader();
+  let mypublicKey = reader.readAsText(file);
+
+  reader.addEventListener("loadend", () => {
+    let promisePubKey = Promise.resolve(importRsaKey(reader.result));
+    promisePubKey.then((value) => {
+    /*console.log('mypubKey value');
+    console.log(value);*/
+    mypubKey = value;
+   });
+  });
+}
+
+// remove the link to the crypted file after click has been done
+document.getElementById("w3downloadEncryptedMsg").addEventListener("pointerdown", (event) => {
+  setTimeout(() => {
+    document.getElementById("w3downloadEncryptedMsg").setAttribute("style", "display:none;");
+  }, 4000);
+});
+document.getElementById("w3downloadEncryptedMsg").addEventListener("click", (event) => {
+  setTimeout(() => {
+    document.getElementById("w3downloadEncryptedMsg").setAttribute("style", "display:none;");
+  }, 4000);
+});
+
+// reset values on page load
+document.getElementById("filesLoad").reset();
+document.getElementById("rsa-oaep-message").value = '';
+document.querySelector(".cCenterB").setAttribute("style", "display:none;");
+document.getElementById("w3downloadEncryptedMsg").setAttribute("style", "display:none;");
+document.getElementById("w3downloadPubPriv_CKeys").setAttribute("style", "display:none;");
+document.getElementById("cryptInterface").setAttribute("style", "background-color:#000");
+</script>
+
+</body>
+</html>
