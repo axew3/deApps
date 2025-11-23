@@ -217,12 +217,26 @@ textarea{ width:100%; min-height:100px;}
  var ciphertext,myprivKey,mypubKey;
  var myPubPrivKey='';
 
+
 /*
-Convert an ArrayBuffer into a string
+Convert a string into an ArrayBuffer
+from https://developers.google.com/web/updates/2012/06/How-to-convert-ArrayBuffer-to-and-from-String
 */
-function ab2str(buf) {
-  return String.fromCharCode.apply(null, new Uint8Array(buf));
+function str2ab(str) {
+  const buf = new ArrayBuffer(str.length);
+  const bufView = new Uint8Array(buf);
+  for (let i = 0, strLen = str.length; i < strLen; i++) {
+    bufView[i] = str.charCodeAt(i);
+  }
+  return buf;
 }
+  /*
+  Convert an ArrayBuffer into a string
+  from https://developers.google.com/web/updates/2012/06/How-to-convert-ArrayBuffer-to-and-from-String
+  */
+  function ab2str(buf) {
+    return String.fromCharCode.apply(null, new Uint8Array(buf));
+  }
 
 /*
 START Export the given key and write it into the "exported-key" space.
@@ -300,25 +314,6 @@ function w3GenCryptoKeys(){
 
 /* ABOUT ENCRYPT DECRYPT ONLY */
 
-/*
-Convert a string into an ArrayBuffer
-from https://developers.google.com/web/updates/2012/06/How-to-convert-ArrayBuffer-to-and-from-String
-*/
-function str2ab(str) {
-  const buf = new ArrayBuffer(str.length);
-  const bufView = new Uint8Array(buf);
-  for (let i = 0, strLen = str.length; i < strLen; i++) {
-    bufView[i] = str.charCodeAt(i);
-  }
-  return buf;
-}
-  /*
-  Convert an ArrayBuffer into a string
-  from https://developers.google.com/web/updates/2012/06/How-to-convert-ArrayBuffer-to-and-from-String
-  */
-  function ab2str(buf) {
-    return String.fromCharCode.apply(null, new Uint8Array(buf));
-  }
 
 /*
 Import a PEM encoded RSA private key, to use for RSA-PSS signing.
@@ -575,6 +570,7 @@ document.getElementById("cryptInterface").addEventListener("click", function (e)
   document.getElementById("decryptInterface").setAttribute("style", "background-color:#333;");
 });
 document.getElementById("decryptInterface").addEventListener("click", function (e) {
+
   document.getElementById("wrapGenCryptoKeys").setAttribute("style", "display:none;");
   document.querySelector(".wrap1-cryptDecryptControls").setAttribute("style", "display:none;");
   document.querySelector(".cCenterB").setAttribute("style", "display:block;");
