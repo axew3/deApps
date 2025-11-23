@@ -206,7 +206,6 @@ textarea{ width:100%; min-height:100px;}
 }
 </style>
 <script>
-
 /*
 *
 * C 2025 axew3.com - MIT License
@@ -304,8 +303,8 @@ function w3GenCryptoKeys(){
     document.getElementById('my_publicKey').innerHTML = '';
     exportCryptoKeyPublic(keyPair.publicKey);
     exportCryptoKeyPrivate(keyPair.privateKey);
-    console.log(keyPair.publicKey);
-    console.log(keyPair.privateKey);
+    /*console.log(keyPair.publicKey);
+    console.log(keyPair.privateKey);*/
   });
 }
 
@@ -410,8 +409,6 @@ function importRsaKey(pem) {
    const crypted = new Blob([ciphertext], {type: 'text/plain'});
    let cryptedU = window.URL.createObjectURL(crypted);
 
-  /*console.log('txtBlob');
-  console.log(crypted);*/
   document.getElementById("w3downloadEncryptedMsg").setAttribute("style", "display:block;");
   document.getElementById("w3downloadEncryptedMsg").setAttribute("href", cryptedU);
 
@@ -729,3 +726,4 @@ document.getElementById("cryptInterface").setAttribute("style", "background-colo
 
 </body>
 </html>
+
