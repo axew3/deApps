@@ -206,6 +206,7 @@ textarea{ width:100%; min-height:100px;}
 }
 </style>
 <script>
+
 /*
 *
 * C 2025 axew3.com - MIT License
@@ -409,6 +410,8 @@ function importRsaKey(pem) {
    const crypted = new Blob([ciphertext], {type: 'text/plain'});
    let cryptedU = window.URL.createObjectURL(crypted);
 
+  /*console.log('txtBlob');
+  console.log(crypted);*/
   document.getElementById("w3downloadEncryptedMsg").setAttribute("style", "display:block;");
   document.getElementById("w3downloadEncryptedMsg").setAttribute("href", cryptedU);
 
@@ -560,6 +563,7 @@ document.getElementById("generateInterface").addEventListener("click", function 
 document.getElementById("cryptInterface").addEventListener("click", function (e) {
   document.getElementById("wrapGenCryptoKeys").setAttribute("style", "display:none;");
   document.querySelector(".wrap1-cryptDecryptControls").setAttribute("style", "inline-block;");
+  document.querySelector(".decrypted-value").innerText = '';
   document.querySelector(".cCenterB").setAttribute("style", "display:none;");
   document.getElementById("wrapEncrypt").setAttribute("style", "display:flex;");
   this.setAttribute("style", "background-color:#000;");
@@ -567,9 +571,9 @@ document.getElementById("cryptInterface").addEventListener("click", function (e)
   document.getElementById("decryptInterface").setAttribute("style", "background-color:#333;");
 });
 document.getElementById("decryptInterface").addEventListener("click", function (e) {
-
   document.getElementById("wrapGenCryptoKeys").setAttribute("style", "display:none;");
   document.querySelector(".wrap1-cryptDecryptControls").setAttribute("style", "display:none;");
+  document.querySelector(".decrypted-value").innerText = '';
   document.querySelector(".cCenterB").setAttribute("style", "display:block;");
   document.getElementById("wrapEncrypt").setAttribute("style", "display:flex;");
   this.setAttribute("style", "background-color:#000;");
@@ -726,4 +730,3 @@ document.getElementById("cryptInterface").setAttribute("style", "background-colo
 
 </body>
 </html>
-
