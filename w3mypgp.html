@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
 <!--  C 2025 axew3.com - MIT License
 * - Generate crypto key pairs
@@ -205,6 +204,7 @@ textarea{ width:100%; min-height:100px;}
   padding:15px;
 }
 </style>
+
 <script>
 
 /*
@@ -413,6 +413,11 @@ function importRsaKey(pem) {
   /*console.log('txtBlob');
   console.log(crypted);*/
   document.getElementById("w3downloadEncryptedMsg").setAttribute("style", "display:block;");
+
+  let d = new Date();
+  let dr = d.getDay() + '-' + d.toLocaleString('default', { month: 'short' }) + '-' + d.getFullYear() + '__' + d.getHours() + '.' + d.getMinutes() + '.' + d.getSeconds();
+  let downfileName = 'my_encryptedMSG__'+dr+'.txt';
+  document.getElementById("w3downloadEncryptedMsg").setAttribute("download", downfileName);
   document.getElementById("w3downloadEncryptedMsg").setAttribute("href", cryptedU);
 
     const ciphertextValue = document.querySelector(".ciphertext-value");
