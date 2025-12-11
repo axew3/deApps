@@ -1,3 +1,6 @@
+    NOTE that the last version and the how to is always avalable here:
+    https://www.axew3.com/w3/2025/11/super-secret-storage-of-network-files-and-messages/
+
 Online example: https://www.w3it.org/deApps/w3mypgp.html
 
 Store encrypted messages or send them online encrypted so that they can only be read/seen by people who own the keys.
