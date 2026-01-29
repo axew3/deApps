@@ -5,7 +5,7 @@
 <!--
 C since 2025 axew3.com - General Public License v3.0 - https://www.gnu.org/licenses/gpl-3.0.en.html
 * - Generate crypto key pairs
-* - Encrypt/Decrypt: RSA-OAEP hash SHA-256 4096-bit and AES GCM 
+* - Encrypt/Decrypt: RSA-OAEP hash SHA-256 4096-bit and AES GCM
 * - Online working example: https://www.axew3.com/www/deApps/w3mypgp/w3mypgp.html
 * - Version 4
 -->
@@ -132,8 +132,8 @@ textarea{ width:100%;min-height:200px;margin:0;}
 }
 
 .wrapInputsCryptDecryptPass,.wrapResultsCryptDecryptPass{
-	margin:0 30px;
-	padding:20px;
+  margin:0 30px;
+  padding:20px;
 }
 #prelAESGCMencrypt,
 #prelAESGCMdecrypt { display: inline-block;text-align:center; }
@@ -714,7 +714,9 @@ hash: "SHA-256" PBKDF2
 </div>
 </div>
 
-<div id="DprogressBar" class="progressBar" style="display:none"><progress style="width:80%;height:15px" id="Dtprogress" class="tprogress" value="0" max="100">0 %</progress></div>
+<div style="width:100%;text-align:center">
+<div id="DprogressBar" class="progressBar" style="display:none"><progress style="width:100%;height:15px" id="Dtprogress" class="tprogress" value="0" max="100">0 %</progress></div>
+</div>
 
 </form>
 
@@ -780,8 +782,8 @@ hash: "SHA-256" PBKDF2
 
 <div class="wrapInputsCryptDecryptPass">
  <div class="cCenter" style="display:block;"><span class="cText">Upload file to be password Encrypted</span><br>
-  
- 
+
+
   <br><b>Note</b>: the resulting <b>encrypted</b> file to download will be a text file (.txt)<br>
   <!--<input class="buttonC" type="file" id="myFileToBeCryptedAESGCM" name="myFileToBeCryptedAESGCM" accept=".txt, text/plain, image/*, video/*, .pdf">-->
     <input class="buttonC" type="file" id="myFileToBeCryptedAESGCM" name="myFileToBeCryptedAESGCM">
@@ -798,12 +800,12 @@ hash: "SHA-256" PBKDF2
    If it is not possible to provide a preview only the file download will be available.
       </div>
   <input class="buttonC" type="file" id="myFileToBeDecryptedAESGCM" name="myFileToBeDecryptedAESGCM">
-  
+
  </div>
 
   <h2 class="keysdown"><a href="" target="_blank" id="w3decryptedAESGCM" style="display:none" download="">Download file</a>
  </h2>
- 
+
    <table id="prelAESGCMdecrypt" width="100%" style="display:none"><tr><td><div style="display:inline-block" style="width:100%"><div style="width:100%" class="cCenter"><div class="loader"></div></div></div></td></tr></table>
 
 </div>
@@ -1082,7 +1084,7 @@ function getCryptedDisplay() {
     let pb = document.getElementById("DprogressBar");
     let tp = document.getElementById("Dtprogress");
     tp.setAttribute("value", 0);
-    pb.setAttribute("style", "display:block");
+    pb.setAttribute("style", "display:inline-block");
 
   const decryptedValue = document.querySelector(".decrypted-value");
   decryptedValue.textContent = cipher = '';
@@ -1428,7 +1430,7 @@ function eencryptText(text, passw, mimeFname) {
       document.getElementById("w3CKeysOrTextEncrypted").setAttribute("download", downfileName);
     });
     } catch(e){
-  	    document.getElementById("prelAESGCMencrypt").setAttribute("style", "display:none");
+        document.getElementById("prelAESGCMencrypt").setAttribute("style", "display:none");
         document.getElementById("myFileToBeCryptedAESGCM").value = null;
         alert("The file appears to be unsuitable for processing.\nUpload the file to decrypt.");
         //console.log(e);
@@ -1459,7 +1461,7 @@ function w3GetInputDecryptWithPass(){
     alert("Please provide a Password. Process aborted");
     return;
    }
-   
+
    document.getElementById("prelAESGCMdecrypt").setAttribute("style", "display:inline-block");
 
    let p = Promise.resolve(decryptText(r, passw));
@@ -1516,7 +1518,7 @@ function w3GetInputDecryptWithPass(){
    })();
   });
   } catch(e){
-  	    document.getElementById("prelAESGCMdecrypt").setAttribute("style", "display:none");
+        document.getElementById("prelAESGCMdecrypt").setAttribute("style", "display:none");
         document.getElementById("myFileToBeDecryptedAESGCM").value = null;
         alert("The file appears to be unsuitable for processing.\nUpload the file to decrypt.");
         //console.log(e);
