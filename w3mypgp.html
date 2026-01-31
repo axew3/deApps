@@ -1151,8 +1151,8 @@ function getCryptedDisplay() {
 
        // Download link
        fname = fname.split('#||#');
-
-       let fn = typeof fname[1] == 'undefined' ? 'decryptedFile.txt' : fname[1];
+       // It's text
+       let fn = fname[1] == 'undefined' ? 'decryptedFile.txt' : fname[1];
        document.getElementById("w3downloadEncryptedRSA-OAEP").setAttribute("style", "display:block;");
        document.getElementById("w3downloadEncryptedRSA-OAEP").setAttribute("href", txtFileUrl);
        document.getElementById("w3downloadEncryptedRSA-OAEP").setAttribute("download", fn);
