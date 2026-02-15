@@ -4,15 +4,30 @@
 <head>
 <!--
 C since 2025 axew3.com - General Public License v3.0 - https://www.gnu.org/licenses/gpl-3.0.en.html
-* - Generate crypto key pairs
-* - Encrypt/Decrypt: RSA-OAEP hash SHA-256 4096-bit and AES GCM
-* - Online working example: https://www.axew3.com/www/deApps/w3mypgp/w3mypgp.html
-* - Version 4
+O * - Generate crypto key pairs
+P * - Encrypt/Decrypt: RSA-OAEP hash SHA-256 4096-bit and AES GCM SHA-512
+Y * - Online working example: https://www.axew3.com/www/deApps/w3mypgp/w3mypgp.html
+
+  * Unicorn w3 - Secure Binary Vault
+  * Copyright (C) since 2025 axew3.com
+  *
+  * This program is free software: you can redistribute it and/or modify
+  * it under the terms of the GNU General Public License as published by
+  * the Free Software Foundation, either version 3 of the License, or
+  * (at your option) any later version.
+  *
+  * This program is distributed in the hope that it will be useful,
+  * but WITHOUT ANY WARRANTY; without even the implied warranty of
+  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+  * GNU General Public License for more details.
+  *
+  * You should have received a copy of the GNU General Public License
+  * along with this program. If not, see <https://www.gnu.org>.
+  */
 -->
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>w3mypgp - Encrypt/Decrypt RSA OAEP and Password encrypt/decrypt AES GCM</title>
-<meta name="description" content="www my Pretty Good Privacy. The one way to be secret. Strong Encryption (Decryption) using a single standalone HTML file.">
-
+<title>Unicorn w3mypgp v6 - Hybrid Encryption Engine: RSA-OAEP 4096 + AES-256-GCM - encrypt/decrypt files/text</title>
+<meta name="description" content="Browser only Secure Binary Vault. The one way to be secret. Strong files Encryption Decryption using a single standalone HTML file.">
 <meta name="msapplication-TileImage" content="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAAKAAD/4QMqaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAxNCA3OS4xNTE0ODEsIDIwMTMvMDMvMTMtMTI6MDk6MTUgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6Q0VFRjhCNzBGM0Y1MTFGMDhBMkY4RTdDMkJGRUZGRDIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6Q0VFRjhCNzFGM0Y1MTFGMDhBMkY4RTdDMkJGRUZGRDIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpDRUVGOEI2RUYzRjUxMUYwOEEyRjhFN0MyQkZFRkZEMiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpDRUVGOEI2RkYzRjUxMUYwOEEyRjhFN0MyQkZFRkZEMiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pv/uAA5BZG9iZQBkwAAAAAH/2wCEABQQEBkSGScXFycyJh8mMi4mJiYmLj41NTU1NT5EQUFBQUFBREREREREREREREREREREREREREREREREREREREQBFRkZIBwgJhgYJjYmICY2RDYrKzZERERCNUJERERERERERERERERERERERERERERERERERERERERERERERERERP/AABEIABQAFAMBIgACEQEDEQH/xABxAAEAAwEAAAAAAAAAAAAAAAAAAwQFAQEAAgMAAAAAAAAAAAAAAAAAAQUCAwQQAAEDAwMFAQAAAAAAAAAAABEAAQISAwQhMUGBwUITFCMRAAECAgsBAAAAAAAAAAAAAAABAiES8BExQVGBkSIyYgMT/9oADAMBAAIRAxEAPwCvZwLLwquSkZcM6lx8axblVJ3k3DOsueRJpOx20Vm1k+Mtn5S57PSO5YkHTVmvTYNfriANu3dFCG+f3eJCLL839gzPwQxr1B1C5GgxoIREyuAliG9+Xycg9SiIrdONMgn/2Q==">
 <link rel="icon" href="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAAKAAD/4QMqaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAxNCA3OS4xNTE0ODEsIDIwMTMvMDMvMTMtMTI6MDk6MTUgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6Q0VFRjhCNzBGM0Y1MTFGMDhBMkY4RTdDMkJGRUZGRDIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6Q0VFRjhCNzFGM0Y1MTFGMDhBMkY4RTdDMkJGRUZGRDIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpDRUVGOEI2RUYzRjUxMUYwOEEyRjhFN0MyQkZFRkZEMiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpDRUVGOEI2RkYzRjUxMUYwOEEyRjhFN0MyQkZFRkZEMiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pv/uAA5BZG9iZQBkwAAAAAH/2wCEABQQEBkSGScXFycyJh8mMi4mJiYmLj41NTU1NT5EQUFBQUFBREREREREREREREREREREREREREREREREREREREQBFRkZIBwgJhgYJjYmICY2RDYrKzZERERCNUJERERERERERERERERERERERERERERERERERERERERERERERERERP/AABEIABQAFAMBIgACEQEDEQH/xABxAAEAAwEAAAAAAAAAAAAAAAAAAwQFAQEAAgMAAAAAAAAAAAAAAAAAAQUCAwQQAAEDAwMFAQAAAAAAAAAAABEAAQISAwQhMUGBwUITFCMRAAECAgsBAAAAAAAAAAAAAAABAiES8BExQVGBkSIyYgMT/9oADAMBAAIRAxEAPwCvZwLLwquSkZcM6lx8axblVJ3k3DOsueRJpOx20Vm1k+Mtn5S57PSO5YkHTVmvTYNfriANu3dFCG+f3eJCLL839gzPwQxr1B1C5GgxoIREyuAliG9+Xycg9SiIrdONMgn/2Q==">
 <link rel="apple-touch-icon" href="data:image/jpeg;base64,/9j/4QAYRXhpZgAASUkqAAgAAAAAAAAAAAAAAP/sABFEdWNreQABAAQAAAAKAAD/4QMqaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLwA8P3hwYWNrZXQgYmVnaW49Iu+7vyIgaWQ9Ilc1TTBNcENlaGlIenJlU3pOVGN6a2M5ZCI/PiA8eDp4bXBtZXRhIHhtbG5zOng9ImFkb2JlOm5zOm1ldGEvIiB4OnhtcHRrPSJBZG9iZSBYTVAgQ29yZSA1LjUtYzAxNCA3OS4xNTE0ODEsIDIwMTMvMDMvMTMtMTI6MDk6MTUgICAgICAgICI+IDxyZGY6UkRGIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyI+IDxyZGY6RGVzY3JpcHRpb24gcmRmOmFib3V0PSIiIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyIgeG1sbnM6eG1wTU09Imh0dHA6Ly9ucy5hZG9iZS5jb20veGFwLzEuMC9tbS8iIHhtbG5zOnN0UmVmPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvc1R5cGUvUmVzb3VyY2VSZWYjIiB4bXA6Q3JlYXRvclRvb2w9IkFkb2JlIFBob3Rvc2hvcCBDQyAoV2luZG93cykiIHhtcE1NOkluc3RhbmNlSUQ9InhtcC5paWQ6Q0VFRjhCNzBGM0Y1MTFGMDhBMkY4RTdDMkJGRUZGRDIiIHhtcE1NOkRvY3VtZW50SUQ9InhtcC5kaWQ6Q0VFRjhCNzFGM0Y1MTFGMDhBMkY4RTdDMkJGRUZGRDIiPiA8eG1wTU06RGVyaXZlZEZyb20gc3RSZWY6aW5zdGFuY2VJRD0ieG1wLmlpZDpDRUVGOEI2RUYzRjUxMUYwOEEyRjhFN0MyQkZFRkZEMiIgc3RSZWY6ZG9jdW1lbnRJRD0ieG1wLmRpZDpDRUVGOEI2RkYzRjUxMUYwOEEyRjhFN0MyQkZFRkZEMiIvPiA8L3JkZjpEZXNjcmlwdGlvbj4gPC9yZGY6UkRGPiA8L3g6eG1wbWV0YT4gPD94cGFja2V0IGVuZD0iciI/Pv/uAA5BZG9iZQBkwAAAAAH/2wCEABQQEBkSGScXFycyJh8mMi4mJiYmLj41NTU1NT5EQUFBQUFBREREREREREREREREREREREREREREREREREREREQBFRkZIBwgJhgYJjYmICY2RDYrKzZERERCNUJERERERERERERERERERERERERERERERERERERERERERERERERERP/AABEIABQAFAMBIgACEQEDEQH/xABxAAEAAwEAAAAAAAAAAAAAAAAAAwQFAQEAAgMAAAAAAAAAAAAAAAAAAQUCAwQQAAEDAwMFAQAAAAAAAAAAABEAAQISAwQhMUGBwUITFCMRAAECAgsBAAAAAAAAAAAAAAABAiES8BExQVGBkSIyYgMT/9oADAMBAAIRAxEAPwCvZwLLwquSkZcM6lx8axblVJ3k3DOsueRJpOx20Vm1k+Mtn5S57PSO5YkHTVmvTYNfriANu3dFCG+f3eJCLL839gzPwQxr1B1C5GgxoIREyuAliG9+Xycg9SiIrdONMgn/2Q==">
@@ -21,6 +36,7 @@ C since 2025 axew3.com - General Public License v3.0 - https://www.gnu.org/licen
 html,body{ font-family: Verdana,Tahoma,Helvetica;
 line-height: 1.4;
 padding:0;margin:0;
+letter-spacing: -0.5px;
 /*font-size:1.2rem;*/
 }
 
@@ -32,21 +48,19 @@ a:focus, a:hover, a:active {
 }
 
 .copyleft{
-  /*align:right;
-  text-align:right;*/
+  display:flex;
+  flex-direction:row;
+  justify-content:space-between;
+  align-items:center;
   font-size:1.1rem;
-  background-color:#FFF;
-  padding:10px 10px 0 10px;
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0.5), transparent);
+  padding:20px 30px;
 }
 .copyleft1{
   text-align:left;
-  background-color:#F1F1F1;
-  padding:10px 20px;
 }
 .copyleft2{
   text-align:right;
-  background-color:#F1F1F1;
-  padding:10px 20px;
 }
 
 .wrapGenCryptoKeys{
@@ -83,17 +97,21 @@ textarea{ width:100%;min-height:200px;margin:0;}
   min-width:350px;
 }
 
-#w3downloadPublic_CKeys, #w3downloadPrivate_CKeys, #w3downloadPubPriv_CKeys{
+#w3downloadPub_OAEPKey,#w3downloadPriv_OAEPKey{
+padding:30px;
+}
+
+#w3downloadPub_OAEPKey,#w3downloadPriv_OAEPKey,#w3downloadPublic_CKeys, #w3downloadPrivate_CKeys, #w3downloadPubPriv_CKeys{
   color:#FFF;
   text-decoration: none;
 }
 
+#w3downloadPub_OAEPKey:hover,
+#w3downloadPub_OAEPKey:focus,
+#w3downloadPriv_OAEPKey:hover,
+#w3downloadPriv_OAEPKey:focus,
 #w3downloadPubPriv_CKeys:hover,
-#w3downloadPubPriv_CKeys:focus,
-#w3downloadPrivate_CKeys:hover,
-#w3downloadPrivate_CKeys:focus,
-#w3downloadPublic_CKeys:hover,
-#w3downloadPublic_CKeys:focus {
+#w3downloadPubPriv_CKeys:focus{
  color: #4BEA43;
  text-decoration: none;
 }
@@ -134,9 +152,25 @@ textarea{ width:100%;min-height:200px;margin:0;}
 .wrapInputsCryptDecryptPass,.wrapResultsCryptDecryptPass{
   margin:0 30px;
   padding:20px;
+  display:inline-block;
+  max-width:90%;
 }
 #prelAESGCMencrypt,
-#prelAESGCMdecrypt { display: inline-block;text-align:center; }
+#prelAESGCMdecrypt {
+  display:flex;
+  flex-direction:row;
+  justify-content:center;
+  align-items:center;
+  width:auto;
+  margin:20px;
+}
+
+.marginBott40{
+margin-bottom:40px;
+}
+.marginTop40{
+margin-top:40px;
+}
 
 #wrapGenCryptoKeys,#destImg,#videoVOUT,#wrapMessageCryptPass,#messageCryptPass{
  /*display:none;*/
@@ -169,8 +203,6 @@ textarea{ width:100%;min-height:200px;margin:0;}
   margin:0;
   max-width:90%;
   min-width:90%;
- /*border-top:5px solid #333;*/
- /*background-color:#F1F1F1;*/
 }
 
 .message-control,.ciphertext{
@@ -192,10 +224,8 @@ textarea{ width:100%;min-height:200px;margin:0;}
  background-color:#FFF;
  padding: 10px;
  margin:20px;
- /*display: inline-block;*/
- max-width:90%;
- min-width:90%;
  font-size:2.0rem;
+ word-break:break-all;
  /*border-top:5px solid #000;*/
 }
 .decrypted-value{
@@ -242,10 +272,12 @@ textarea{ width:100%;min-height:200px;margin:0;}
 #w3downloadPublic_CKeys:focus,
 .encrypt-button:hover,
 .encrypt-button:focus,
-#w3CKeysOrTextEncrypted:hover,
-#w3CKeysOrTextEncrypted:focus,
+#w3AESGCMencryptedFile:hover,
+#w3AESGCMencryptedFile:focus,
 #w3decryptedAESGCM:hover,
-#w3decryptedAESGCM:focus
+#w3decryptedAESGCM:focus,
+#w3AESGCMpwdDown:hover,
+#w3AESGCMpwdDown:focus
 {
  color: #4BEA43;
  text-decoration: none;
@@ -257,15 +289,16 @@ textarea{ width:100%;min-height:200px;margin:0;}
  text-decoration: none;
 }
 
-a:link#w3CKeysOrTextEncrypted,a:visited#w3CKeysOrTextEncrypted,
-a:link#w3decryptedAESGCM,a:visited#w3decryptedAESGCM
+a:link#w3AESGCMencryptedFile,a:visited#w3AESGCMencryptedFile,
+a:link#w3decryptedAESGCM,a:visited#w3decryptedAESGCM,
+a:link#w3AESGCMpwdDown,a:visited#w3AESGCMpwdDown
 {
  color: #FFF;
  text-decoration: none;
 }
-a:hover#w3CKeysOrTextEncrypted,a:hover#w3decryptedAESGCM
+a:hover#w3AESGCMencryptedFile,a:hover#w3decryptedAESGCM,a:hover#w3AESGCMpwdDown
 {
- color: #E1E1E1;
+ color: #4BEA43;
  text-decoration: none;
 }
 
@@ -273,7 +306,7 @@ a:hover#w3CKeysOrTextEncrypted,a:hover#w3decryptedAESGCM
  padding:10px 15px;
 }
 .cText{
-  font-size:2.0rem;
+  font-size:3.5rem;
   font-weight:900;
   padding:5px 15px;
 }
@@ -283,12 +316,22 @@ a:hover#w3CKeysOrTextEncrypted,a:hover#w3decryptedAESGCM
 }
 .cCenter{
   text-align:center;
-  padding:15px 0;
+  padding:15px 0 0 0;
 }
-.cCenterB{
+.cCenterD{
   text-align:center;
-  padding:15px 0;
-  margin-top:35px
+  padding:0;
+  margin-top:10px
+}
+.cCenterC{
+  text-align:center;
+  padding:0;
+  font-size:1.5rem;
+}
+.kTextC{
+ padding:5px 15px;
+ background-color:#000;
+ color:#FFF;
 }
 
 progress, progress::-webkit-progress-value,progress::-moz-progress-bar,progress::-webkit-progress-bar{
@@ -296,7 +339,21 @@ progress, progress::-webkit-progress-value,progress::-moz-progress-bar,progress:
   min-height:20px;
   border-radius: 0px;
 }
-
+#AESGCMpassState{
+  display:none;
+  margin:0 55px 40px 55px;
+  color:green;
+  background-color:#FFF;
+}
+.desc{
+text-align:center;
+font-size:1.2rem;
+margin:0 50px;
+}
+.descBig{
+text-align:center;
+font-size:2.2rem;
+}
 .big1{
 min-width:350px;font-weight:900;
 }
@@ -315,25 +372,62 @@ min-width:350px;font-weight:900;
 summary {
   margin:0px 15px 20px 15px;
   background-color: #dddddd;
-  border: none;
-  box-shadow: 1px 1px 1px black;
+  border: 1px solid #000;
   cursor: pointer;
   font-weight:600;
 }
 details {
-font-size:1rem;
+font-size:1.0rem;
 }
-
 details > summary {
   padding: 6px;
   background-color: #dddddd;
-  border: none;
-  box-shadow: 1px 1px 1px black;
+  border: 1px solid #000;
   cursor: pointer;
 }
-
 details > summary {
   background-color: #ccccff;
+}
+
+#pubKeyState, #privKeyState{
+ background-color: #FFF;
+ border:5px dashed #3B4568;
+ padding:10px 20px;
+ font-size:1.5rem;
+}
+
+#AESGCMfileEncryptedTime{
+ display:none;
+}
+
+#listAESGCMdecryptedFiles{
+margin:0 30px;
+padding:20px;
+font-weight:900;
+font-size:1.8rem;
+text-align:center;
+}
+
+.wrapKeysUploadedInfo{
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  font-size:1rem;
+  padding:0px;
+  color:#000;
+  text-align:center;
+}
+#privKeyInfoOAEP, #pubKeyInfoOAEP{
+  margin:0 !important;
+  background-color:#000;
+  color:#FFF;
+  font-weight:100 !important;
+  padding:15px 10px;
+  overflow-wrap:break-word;
+  white-space:wrap;
+  word-break:break-all;
+  width:100%;
 }
 
 .progressBar,.centerc{
@@ -371,6 +465,9 @@ details > summary {
 </style>
 <script>
 
+  // TODO Cleanup MEMORY from BLOB after files download, and provide auto dowload option with immediate blob self desctruction
+  //
+
  const ciphertextAry = [];
  var myPubPrivKey=ciphertext=myprivKey=mypubKey=passw=ciphertextChunks=w3myfmime=w3myfname=randNum=randPass=fileChunksResOAEP=resCipherFileRes=resCipherFile='';
  var isDoingTask = 0; // to avoid tasks execution while another is running
@@ -405,11 +502,17 @@ const audioMimeExt=["audio/mpeg;.mp3","audio/wav;.wav","audio/ogg;.ogg","audio/m
 const imageMimeExt=["image/jpeg;.jpg","image/png;.png","image/gif;.gif","image/webp;.webp","image/svg+xml;.svg","image/bmp;.bmp","image/tiff;.tiff","image/x-icon;.ico","image/avif;.avif","image/heic;.heic","image/heif;.heif"];
 const commonMimeExt=["application/pdf;.pdf","application/json;.json","application/xml;.xml","application/zip;.zip","application/octet-stream;.bin","application/javascript;.js","application/msword;.doc","application/vnd.openxmlformats-officedocument.wordprocessingml.document;.docx","application/vnd.ms-excel;.xls","application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;.xlsx","application/vnd.ms-powerpoint;.ppt","application/x-gzip;.gz","application/x-msdownload;.exe","application/x-sh;.sh","application/x-apple-diskimage;.dmg","application/x-msi;.msi","text/html;.html","text/plain;.txt","text/css;.css","text/csv;.csv","text/calendar;.ics","font/woff;.woff","font/woff2;.woff2","font/ttf;.ttf","font/otf;.otf","model/obj;.obj","model/stl;.stl","model/gltf+json;.gltf"];
 
-var passLength = 40;
+var passLength = getRandomNum(90,100);
 
-// Generate a random pass of given length using cryptographically strong random values (for future use)
+function getRandomNum(min=80,max=120){
+  let array = new Uint32Array(1);
+  window.crypto.getRandomValues(array);
+  let randomFloat = array[0] / (0xFFFFFFFF + 1);
+  return Math.ceil(randomFloat * (max - min) + min);
+}
+
 function getRandPass(passLength){
-  var characters = '@ABCDEFGHIJKLmnopqrstuvwxyz[\]^_abcdefghijklMNOPQRSTUVWXYZ{|}~!"#$%&()*+,-./0123456789:;<=>?';
+  var characters = '@A1B2C3D4E5F6G7H8I9JKLmnopqrstuvwxyz[\]^_a1b2c3de4fg5hi6jk7lMN8OPQRS9TUVWXYZ{|}~!"#$%&()*+,-./0123456789:;<=>?';
   let pass = '';
   var charactersLength = characters.length;
   var randomValues = new Uint32Array(passLength);
@@ -419,6 +522,8 @@ function getRandPass(passLength){
   }
  return pass;
 }
+
+//console.log(getRandPass(getRandomNum(150,200)));
 
 // Return an array of the string in chunks of specified chars num 'chunkCharsNum'
 function w3stringGetInChunks(msg,chunkCharsNum){
@@ -477,17 +582,34 @@ async function exportCryptoKeyPrivate(key) {
   let exportedAsString = ab2str(exported);
   let exportedAsBase64 = window.btoa(exportedAsString);
   let pemExported = '-----BEGIN PRIVATE KEY-----\n'+exportedAsBase64+'\n-----END PRIVATE KEY-----';
+  myPubOnly = myPubPrivKey; // because already contain the public key
   myPubPrivKey = myPubPrivKey+=pemExported;
   let pemEx = new Blob([myPubPrivKey], {type: 'text/plain'});
   let txtFileUrl = window.URL.createObjectURL(pemEx);
+  // single priv key download
+  let pePriv = new Blob([pemExported], {type: 'text/plain'});
+  let uPriv = window.URL.createObjectURL(pePriv);
+
+
 // trick to detect if exportCryptoKeyPublic fullfilled already and set only when myPubPrivKey contain both private and public keys
 // so to have an unique buffer with priv and pub key without having to recode promises
+
   if(myPubPrivKey.includes('BEGIN PUBLIC KEY')){
+
+      let pePub = new Blob([myPubOnly], {type: 'text/plain'});
+      let uPub = window.URL.createObjectURL(pePub);
+
+    // both keys download
+    document.getElementById("my_privateKey").insertAdjacentText('afterbegin', pemExported);
     document.getElementById("w3downloadPubPriv_CKeys").setAttribute("style", "display:block;");
     document.getElementById("w3downloadPubPriv_CKeys").setAttribute("href", txtFileUrl);
-    document.getElementById("w3downloadPubPriv_CKeys").setAttribute("style", "display:block;");  }
-    document.getElementById("my_privateKey").insertAdjacentText('afterbegin', pemExported);
-}
+    // singles
+    document.getElementById("w3downloadPub_OAEPKey").setAttribute("href", uPub);
+    document.getElementById("w3downloadPriv_OAEPKey").setAttribute("href", uPriv);
+    document.getElementById("wrapSinglesKeysDownload").setAttribute("style", "display:block;");
+
+  }
+ }
 
 async function exportCryptoKeyPublic(key) {
   var exported = await window.crypto.subtle.exportKey("spki", key);// format for Public key
@@ -498,6 +620,9 @@ async function exportCryptoKeyPublic(key) {
   myPubPrivKey = myPubPrivKey+=pemExported;
   let pemEx = new Blob([myPubPrivKey], {type: 'text/plain'});
   let txtFileUrl = window.URL.createObjectURL(pemEx);
+  // single pub key download
+  let peP = new Blob([pemExported], {type: 'text/plain'});
+  let u = window.URL.createObjectURL(peP);
 // trick to detect if exportCryptoKeyPrivate fullfilled already and set only when myPubPrivKey contain both private and public keys
 // so to have an unique buffer with priv and pub key without having to recode promises
   if(myPubPrivKey.includes('BEGIN PRIVATE KEY')){
@@ -598,7 +723,7 @@ function importRsaKey(pem) {
 
 async function decryptMessageFile(key,ciphertext) {
 
-    if (key == null || key == ''){ alert('Load your secrets keys first'); return; }
+    if (key == null || key == ''){ alert('Load the Private key first'); return; }
     if (ciphertext == null || ciphertext == ''){ alert('Encrypt the text first\nor upload a file to decrypt using the\nUpload to decrypt button....'); return; }
 
     let decrypted = await window.crypto.subtle.decrypt(
@@ -621,9 +746,8 @@ hash: "SHA-256" 4096-bit */
 <body>
 
 <div class="copyleft">
- <div class="copyleft1">w3mypgp - <b>the one way</b> to be secret<br>note: most of the cryptographic JS code was taken from MDN at <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API" target="_blank">MDN Web_Crypto_API</a>
- <div class="copyleft2"><span style="font-size:25px"><a href="https://www.axew3.com/www/deApps/w3mypgp/w3mypgp.html" target="_blank">Online exec</a></span><br>&copy; since 2025 <a href="https://axew3.com" target="_blank">axew3.com</a></div>
-</div>
+ <div class="copyleft1"><b>UNICORN</b> w3mypgp - <b>the one way</b> to be secret. <a href="https://developer.mozilla.org/en-US/docs/Web/API/Web_Crypto_API" target="_blank">MDN Web_Crypto_API</a></div>
+ <div class="copyleft2"><span style="font-size:2.0rem"><a href="https://www.axew3.com/www/deApps/w3mypgp/w3mypgp.html" target="_blank">Online exec</a></span>&nbsp;&nbsp;&nbsp;<a href="https://www.axew3.com/w3/2025/11/super-secret-storage-of-network-files-and-messages/" target="_blank">How to use and info</a><br>&copy; since 2025 <a href="https://axew3.com" target="_blank">axew3.com</a></div>
 </div>
 
 <div class="interface">
@@ -639,7 +763,7 @@ hash: "SHA-256" 4096-bit
 </div>
 <div id="cryptoExplainAES-GCM" class="explain">
 Web Crypto<br>name: "AES-GCM"<br>
-hash: "SHA-256" PBKDF2
+hash: "SHA-512" PBKDF2
 </div>
 
 
@@ -660,10 +784,13 @@ hash: "SHA-256" PBKDF2
 
 <h2 class="keysdown"><a href="" target="_blank" id="w3downloadPubPriv_CKeys" download="my_Public_Private_Keys.txt">Download Public and Private key</a>
 </h2>
-<!--<h2 class="keysdown"><a href="" target="_blank" id="w3downloadPublic_CKeys" style="width:350px;font-weight:900;" download="my_Public_Key.txt">Download Public key</a>
+<div style="display:none" id="wrapSinglesKeysDownload">
+<br>
+<h2 class="keysdown"><a href="" target="_blank" id="w3downloadPub_OAEPKey" download="my_RsaOaep_Public_Key.txt">Download Public key</a>
+</h2><br>
+<h2 class="keysdown"><a href="" target="_blank" id="w3downloadPriv_OAEPKey" download="my_RsaOaep_Private_Key.txt">Download Private key</a>
 </h2>
-<h2 class="keysdown"><a href="" target="_blank" id="w3downloadPrivate_CKeys" style="width:350px;font-weight:900;" download="my_Private_Key.txt">Download Private key</a>
-</h2>-->
+</div>
 
 <div class="result">
 <p id="my_privateKey"></p>
@@ -678,25 +805,38 @@ hash: "SHA-256" PBKDF2
 
 <div class="wrap0-cryptDecryptControls">
 <form id="filesLoad" method="post" enctype="multipart/form-data" style="margin:0;padding:0;">
-<div class="cCenter"><span class="cText">Load secret keys</span><br><input class="buttonC" type="file" id="myPubPrivKeyTXT" name="myPubPrivKeyTXT" accept=".txt, text/plain, image/png, image/jpeg"></div>
-<!--
-<div class="cCenter"><span class="cText">Load Public key</span><br><input class="buttonC" type="file" id="myPublicKeyTXT" name="myPublicKeyTXT" accept=".txt, text/plain, image/png, image/jpeg" /></div>
-<div class="cCenter"><span class="cText">Load Private key</span><br><input class="buttonC" type="file" id="myPrivateKeyTXT" name="myPrivateKeyTXT" accept=".txt, text/plain, image/png, image/jpeg" /></div>
--->
-<div class="cCenterB"><span class="cText">Decrypt RSA-OAEP file</span><br><input class="buttonC" type="file" id="myCryptedFile" name="myCryptedFile"></div>
+<div class="cCenter"><span class="cText">Load keys</span><br><input class="buttonC" type="file" id="myPubPrivKeyTXT" name="myPubPrivKeyTXT" accept=".txt, text/plain, image/png, image/jpeg"></div>
+<br>
+<div class="wrapKeysUploadedInfo">
+ <div style="" id="wrapPrivKeyInfoOAEP">
+  <details>
+  <summary id="privKeyState">Private key not loaded</summary>
+  <div id="privKeyInfoOAEP"></div>
+  </details>
+ </div>
+
+ <div style="" id="wrapPubKeyInfoOAEP">
+  <details>
+  <summary id="pubKeyState">Public key not loaded</summary>
+  <div id="pubKeyInfoOAEP"></div>
+  </details>
+  </div>
+</div>
+
+
+<div class="cCenterD"><span class="cText">Decrypt RSA-OAEP File</span><br><input class="buttonC" type="file" id="myCryptedFile" name="myCryptedFile"></div>
 
 <div id="wrapDecEncBrowserRate">
-<div style="font-size:1rem;padding:20px;color:#000" class="cCenter">
+<div style="font-size:1rem;padding:20px;color:#000" class="cCenter desc">
   <details>
-  <summary>Read Throttling encryption/decryption speed note</summary>
+  <summary>Throttling encrypt/decrypt speed note</summary>
   <span style="font-weight:900">Note</span> that some browsers (<b>such as Firefox on Android</b>) may require the encryption/decryption speed to be set to 50 or 70 (slower) to successfully encrypt/decrypt a file. 5 milliseconds is the fastest possible encryption/decryption speed, and Chrome browser test on Android work fine together with all tested Desktop browsers, Firefox included. Setting this value to 0 will probably have no effect and the browser will throttle the encryption/decryption loop with a delay of 4/5 milliseconds as a minimum.
   </details>
-  <!--<span style="font-weight:900">Note</span> that some browsers (such as Firefox on Android) may require the encryption/decryption speed to be set to 50 or 70 (slower) to successfully encrypt/decrypt a file. 5 milliseconds is the fastest possible encryption/decryption speed, and Chrome browser tests on Android work fine together with all tested Desktop browsers including Firefox -->
 </div>
-<div class="centerc">
-<label for="decEncBrowserRate">Choose encryption/decryption speed <b>(default 5 if not set)</b>: &nbsp;</label>
+<div class="centerc desc">
+<label for="decEncBrowserRate">Encryption/decryption speed <b>(default 5)</b>: &nbsp;</label>
 <select name="decEncBrowserRate" style="font-size:1.5rem;padding:5px;font-weight:600;border:2px solid #000" id="decEncBrowserRate">
-  <option value="">Avoid the browser's clamping/throttling</option>
+  <option value="">Browser throttling</option>
   <option value="0">0 (faster)</option>
   <option value="5">5</option>
   <option value="10">10</option>
@@ -721,12 +861,9 @@ hash: "SHA-256" PBKDF2
 </form>
 
      <div class="decrypted">
-
      <b>Decrypted:</b>
      <br>
      <a href="" target="_blank" id="w3downloadEncryptedRSA-OAEP" class="cText big1" style="display:none" download="w3mypgp_decrypted-OAEP.txt">Download decrypted file</a>
-
-
       <br><span class="decrypted-value"></span>
      </div>
 
@@ -734,20 +871,20 @@ hash: "SHA-256" PBKDF2
 
   <div class="wrap1-cryptDecryptControls">
 
-  <div class="cCenter"><span class="cText">Upload file to be encrypted with RSA-OAEP</span><br>
+  <div class="cCenter desc"><span class="cText">Encrypt file via RSA-OAEP</span><br>
     <br><b>Note</b>: the resulting <b>encrypted</b> file to download (and the encryption progress) will display further down<br>
     <input class="buttonC" type="file" id="myFileToBeCryptedRSAOAEP" name="myFileToBeCryptedRSAOAEP">
-    <h2 class="keysdown"><a href="" target="_blank" id="downMyFileCryptedRSAOAEP" style="display:none" download="my_Password_Crypted_file.txt">Download the Pass Encrypted file</a>
+    <h2 class="keysdown"><a href="" target="_blank" id="downMyFileCryptedRSAOAEP" style="display:none" download="my_RSAOAEP_Crypted_file.txt">Download the Pass Encrypted file</a>
     </h2>
   </div>
             <div class="message-control">
-              <div class="cText pText">or type the message you want to encrypt:</div>
+              <div class="cText pText">...or type text below:</div>
               <textarea id="rsa-oaep-message" name="message" placeholder="...to be encrypted"></textarea>
             </div>
             <div class="ciphertext">
 
               <div style="display:inline-block">
-              <input class="encrypt-button" type="button" value="Encrypt">
+              <input class="encrypt-button" type="button" value="Encrypt text">
               </div>
               <div style="display:inline-block;padding-left:15px;">
                 <b id="waitEncryption" class="cText" style="display:none">...please wait</b>
@@ -756,7 +893,7 @@ hash: "SHA-256" PBKDF2
               <div class="loader" id="loader" style="display:none"></div>
               <div id="progressBar" class="progressBar" style="display:none"><progress id="tprogress" class="tprogress" value="0" max="100">0 %</progress></div>
               </div>
-               &nbsp; &nbsp; &nbsp;<a href="" target="_blank" id="w3downloadEncryptedMsg" class="cText" style="min-width:350px;font-weight:900;" download="w3mypgp_encryptedMsg.txt">Download encrypted file</a>
+               &nbsp; &nbsp; &nbsp;<a href="" target="_blank" id="w3downloadEncryptedMsg" class="cText" style="min-width:350px;font-weight:900;" download="w3mypgp_encryptedMsg.txt">Download RSA OAEP encrypted file</a>
               <br>
               <br>
               <b>Ciphertext size: </b><span class="ciphertext-value"></span>
@@ -764,8 +901,8 @@ hash: "SHA-256" PBKDF2
               <br>
             </div>
 
-  <div class="wrap-cryptDecryptControls_footer" style="padding: 20px">
-   <b>Note:</b> once the encryption has been completed, here above will appear a virtual link (generated by your browser) to the file containing the encrypted content (processed into/by your system and only existing into your browser's stack) which you can download and share with anyone who has the same generated decryption keys.
+  <div class="wrap-cryptDecryptControls_footer desc" style="padding: 20px">
+   <b>Note:</b> once encryption is complete, a download link will appear above. You can download and share it with anyone who holds the <b>RSA-OAEP Private Key</b> required for decryption.
 
   <h1 class="cText"><a href="https://www.axew3.com/w3/2025/11/super-secret-storage-of-network-files-and-messages/" target="_blank">How to use and info</a></h1>
   </div>
@@ -781,59 +918,183 @@ hash: "SHA-256" PBKDF2
 
 
 <div class="wrapInputsCryptDecryptPass">
- <div class="cCenter" style="display:block;"><span class="cText">Upload file to be password Encrypted</span><br>
+ <div class="cCenter" style="display:block;"><span class="cText">Password encrypt files</span><br>
 
 
-  <br><b>Note</b>: the resulting <b>encrypted</b> file to download will be a text file (.txt)<br>
-  <!--<input class="buttonC" type="file" id="myFileToBeCryptedAESGCM" name="myFileToBeCryptedAESGCM" accept=".txt, text/plain, image/*, video/*, .pdf">-->
-    <input class="buttonC" type="file" id="myFileToBeCryptedAESGCM" name="myFileToBeCryptedAESGCM">
+  <div class="desc"><br>The resulting <b>encrypted</b> file to download will be a (.txt) text file<br>but you can rename it however you like</div><br>
+  <input class="buttonC" type="file" id="myFileToBeCryptedAESGCM" name="myFileToBeCryptedAESGCM" multiple>
 
-  <h2 class="keysdown"><a href="" target="_blank" id="w3CKeysOrTextEncrypted" style="display:none" download="my_Password_Crypted_file.txt">Download the Pass Encrypted file</a>
- </h2>
- <div id="prelAESGCMencrypt" style="display:none"><div style="width:100%" class="cCenter"><div class="loader"></div></div></div>
+  <h2 class="keysdown"><a href="" target="_blank" id="w3AESGCMencryptedFile" style="display:none" download="my_Password_Crypted_file.txt">Download the Pass Encrypted file</a></h2>
+  <h2 class="keysdown" style="margin-top:40px;"><a href="" target="_blank" id="w3AESGCMpwdDown" style="display:none" download="GCM_file_password.txt">Download the Password</a></h2>
+ <div class="descBig" id="prelAESGCMencrypt" style="display:none"><div class="descBig marginBott40" style="line-height:1;"><b>Encrypting file(s)</b>&nbsp;&nbsp;</div><div class="loader marginBott40"></div></div>
+
  </div>
 
-<div class="cCenter backgColor2"><span class="cText">Upload file to be password Decrypted</span><br>
+<div class="cCenter backgColor2"><span class="cText">Decrypt with password</span><br>
   <!-- accept=".txt, text/plain, image/*, video/*, .pdf" -->
-   <br><div style="text-align:left;padding:0 15px;"><b>Note</b>: the resulting <b>decrypted</b> file to download will display right down here along with the preview if it is a video or image.
-   If the result is text or raw data the preview will display inside the text area here below.
-   If it is not possible to provide a preview only the file download will be available.
-      </div>
-  <input class="buttonC" type="file" id="myFileToBeDecryptedAESGCM" name="myFileToBeDecryptedAESGCM">
+  <br>
+  <div class="desc"><b>Load the file password</b> now or enter it manually when prompted later</div>
+  <input class="buttonC" type="file" id="passwordAESGCMfromFile" name="passwordAESGCMfromFile">
+  <div id="AESGCMpassState" class="desc"><b>Password loaded</b></div>
 
+ <div class="descBig" style="margin-top:20px"><b>Load encrypted file</b></div>
+  <input class="buttonC" type="file" id="myFileToBeDecryptedAESGCM" name="myFileToBeDecryptedAESGCM">
+   <div class="desc" style="margin-top:30px"><b>Decrypted</b> file(s) will be listed below<br><br></div>
  </div>
 
-  <h2 class="keysdown"><a href="" target="_blank" id="w3decryptedAESGCM" style="display:none" download="">Download file</a>
- </h2>
+  <h2 class="keysdown"><a href="" target="_blank" id="w3decryptedAESGCM" style="display:none" download="">Download file</a></h2>
 
-   <table id="prelAESGCMdecrypt" width="100%" style="display:none"><tr><td><div style="display:inline-block" style="width:100%"><div style="width:100%" class="cCenter"><div class="loader"></div></div></div></td></tr></table>
+  <div class="desc" id="prelAESGCMdecrypt" style="display:none"><div class="descBig marginTop40" style="line-height:1;"><b>Decrypting file(s)</b>&nbsp;&nbsp;</div><div class="loader marginTop40"></div></div>
+
+   <div class="descBig cCenterC" id="AESGCMfileEncryptedTime"><br><b>File encryption date </b><b id="AESGCMfileEncryptedTimeShow"></b><br><br>file(s)</div>
+   <div id="listAESGCMdecryptedFiles"></div>
 
 </div>
 
-<div class="wrapResultsCryptDecryptPass backBlack">
-
+<!-- <div class="wrapResultsCryptDecryptPass backBlack">
   <div class="backBlackIn">
-
     <img alt="Decrypted Image output" id="destImg" height="200" width="200" src="none.jpg">
-
-    <video id="videoVOUT" controls width="450">
-    <!--<source id="videoOut" src="" type="video/webm" controls />-->
-    </video>
-
-    <div id="wrapMessageCryptPass" class="cText pText">Encrypt the typed text or Read after decryption</div>
-     <textarea id="messageCryptPass" name="messageCryptPass" placeholder="...to be encrypted with password or read after decryption"></textarea>
-     <div style="display:inline-block">
-     <input id="encryptAES-GCM" class="encryptAES-GCM" type="button" value="Encrypt">
-    </div>
-
-  </div><!-- backBlackIn />-->
-
-</div> <!-- wrapResultsCryptDecryptPass />-->
-
+    <video id="videoVOUT" controls width="450"></video>
+</div></div> -->
 
 </div>
 
 <!-- END ENCRYPT/DECRYPT WITH PASS HTML -->
+
+
+<script id="worker-script" type="text/plain">
+    const enc = new TextEncoder();
+    const dec = new TextDecoder();
+
+  async function deriveKey(password, salt) {
+        const passwordKey = await crypto.subtle.importKey(
+            "raw", enc.encode(password), { name: "PBKDF2" }, false, ["deriveKey"]
+        );
+        return await crypto.subtle.deriveKey(
+            { name: "PBKDF2", salt: salt, iterations: 700000, hash: "SHA-512" },
+            passwordKey,
+            { name: "AES-GCM", length: 256 },
+            false,
+            ["encrypt", "decrypt"]
+        );
+      password='';
+    }
+
+    async function packFiles(files) {
+        let totalSize = 12;
+        const archiveTimestamp = BigInt(Date.now());
+        const fileDataObjects = [];
+
+        for (const file of files) {
+            const nameBytes = enc.encode(file.name);
+            const data = file.buffer;
+            fileDataObjects.push({ nameBytes, data, size: data.byteLength });
+            totalSize += 8 + nameBytes.length + data.byteLength;
+        }
+
+        const packed = new Uint8Array(totalSize);
+        const view = new DataView(packed.buffer);
+        view.setUint32(0, files.length, true);
+        view.setBigUint64(4, archiveTimestamp, true);
+
+        let offset = 12;
+        for (const file of fileDataObjects) {
+            view.setUint32(offset, file.nameBytes.length, true);
+            offset += 4;
+            packed.set(file.nameBytes, offset);
+            offset += file.nameBytes.length;
+            view.setUint32(offset, file.size, true);
+            offset += 4;
+            packed.set(new Uint8Array(file.data), offset);
+            offset += file.size;
+        }
+        return packed.buffer;
+    }
+
+  async function unpackFiles(decryptedBuffer) {
+    const fullArray = new Uint8Array(decryptedBuffer);
+    const view = new DataView(fullArray.buffer, fullArray.byteOffset, fullArray.byteLength);
+
+    // 1. Read Global Headers (Matches our 12-byte header)
+    const fileCount = view.getUint32(0, true);
+    const creationTimestamp = view.getBigUint64(4, true);
+    const archiveDate = new Date(Number(creationTimestamp));
+
+    let offset = 12;
+    const extractedFiles = [];
+
+    for (let i = 0; i < fileCount; i++) {
+        // Read Name Length & Name
+        const nameLen = view.getUint32(offset, true);
+        offset += 4;
+        const nameBytes = fullArray.slice(offset, offset + nameLen);
+        const fileName = dec.decode(nameBytes);
+        offset += nameLen;
+
+        // Read File Size
+        const fileSize = view.getUint32(offset, true);
+        offset += 4;
+
+        // Read File Data
+        const fileData = fullArray.slice(offset, offset + fileSize);
+        offset += fileSize;
+
+        // Extract buffer for transfer (zero-copy)
+        extractedFiles.push({
+            name: fileName,
+            buffer: fileData.buffer.slice(fileData.byteOffset, fileData.byteOffset + fileData.byteLength)
+        });
+    }
+    return { archiveDate, files: extractedFiles };
+  }
+
+
+self.onmessage = async (e) => {
+    const { action, buffer, password, files } = e.data;
+    try {
+        if (action === 'ENCRYPT') {
+                const packedBuffer = await packFiles(files);
+                const salt = crypto.getRandomValues(new Uint8Array(16));
+                const iv = crypto.getRandomValues(new Uint8Array(12));
+                const key = await deriveKey(password, salt);
+                const encrypted = await crypto.subtle.encrypt({ name: 'AES-GCM', iv }, key, packedBuffer);
+                const final = new Uint8Array(16 + 12 + encrypted.byteLength);
+                final.set(salt, 0);
+                final.set(iv, 16);
+                final.set(new Uint8Array(encrypted), 28);
+                self.postMessage({ type: 'DONE', result: final }, [final.buffer]);
+                self.close(); // kills itself and clears its own RAM immediately
+            }else if (action === 'DECRYPT') {
+            const fullArray = new Uint8Array(buffer);
+
+            // Extract Salt (16) and IV (12)
+            const salt = fullArray.slice(0, 16);
+            const iv = fullArray.slice(16, 28);
+            const cipherText = fullArray.slice(28);
+
+            const key = await deriveKey(password, salt);
+
+            // Decrypt the entire packed archive
+            const decrypted = await crypto.subtle.decrypt(
+                { name: 'AES-GCM', iv: iv },
+                key,
+                cipherText
+            );
+
+            // Unpack the archive into individual files
+            const unpacked = await unpackFiles(decrypted);
+
+            // Map buffers for Transferable Objects
+            const transferables = unpacked.files.map(f => f.buffer);
+            self.postMessage({ type: 'DONE_DECRYPT', result: unpacked }, transferables);
+            self.close(); // kills itself and clears its own RAM immediately
+        }
+    } catch (err) {
+        self.postMessage({ type: 'ERROR', msg: err.message });
+    }
+};
+</script>
+
 
 <script>
 
@@ -856,7 +1117,7 @@ document.getElementById("cryptInterface").addEventListener("click", function (e)
   document.getElementById("wrapPassProtectInterface").setAttribute("style", "display:none;");
   document.querySelector(".wrap1-cryptDecryptControls").setAttribute("style", "inline-block;");
   document.querySelector(".decrypted-value").innerText = '';
-  document.querySelector(".cCenterB").setAttribute("style", "display:none;");
+  document.querySelector(".cCenterD").setAttribute("style", "display:none;");
   document.querySelector(".cCenter").setAttribute("style", "display:block;");
   document.getElementById("wrapEncrypt").setAttribute("style", "display:flex;");
   document.getElementById("myCryptedFile").value = '';
@@ -866,6 +1127,8 @@ document.getElementById("cryptInterface").addEventListener("click", function (e)
   document.getElementById("passProtectInterface").setAttribute("style", "background-color:#1D0075;");
   document.getElementById("cryptoExplainRSA-OAEP").setAttribute("style", "display:flex;");
   document.getElementById("cryptoExplainAES-GCM").setAttribute("style", "display:none");
+  document.getElementById("wrapPubKeyInfoOAEP").setAttribute("style", "display:block;");
+  document.getElementById("wrapPrivKeyInfoOAEP").setAttribute("style", "display:none;");
 });
 document.getElementById("decryptInterface").addEventListener("click", function (e) {
   document.getElementById("wrapGenCryptoKeys").setAttribute("style", "display:none;");
@@ -873,8 +1136,8 @@ document.getElementById("decryptInterface").addEventListener("click", function (
   document.querySelector(".wrap1-cryptDecryptControls").setAttribute("style", "display:none;");
   document.querySelector(".decrypted-value").innerText = '';
   document.querySelector(".cCenter").setAttribute("style", "display:block;");
-  document.querySelector(".cCenterB").setAttribute("style", "display:block;");
-  document.querySelector(".decrypted").setAttribute("style", "display:inline-block;");
+  document.querySelector(".cCenterD").setAttribute("style", "display:block;");
+  document.querySelector(".decrypted").setAttribute("style", "display:block;");
   document.getElementById("wrapEncrypt").setAttribute("style", "display:flex;");
   this.setAttribute("style", "background-color:#000;");
   document.getElementById("generateInterface").setAttribute("style", "background-color:#333;");
@@ -882,13 +1145,15 @@ document.getElementById("decryptInterface").addEventListener("click", function (
   document.getElementById("passProtectInterface").setAttribute("style", "background-color:#1D0075;");
   document.getElementById("cryptoExplainRSA-OAEP").setAttribute("style", "display:flex;");
   document.getElementById("cryptoExplainAES-GCM").setAttribute("style", "display:none");
+  document.getElementById("wrapPubKeyInfoOAEP").setAttribute("style", "display:none;");
+  document.getElementById("wrapPrivKeyInfoOAEP").setAttribute("style", "display:block;");
 });
 
 document.getElementById("passProtectInterface").addEventListener("click", function (e) {
   document.getElementById("wrapGenCryptoKeys").setAttribute("style", "display:none;");
   document.getElementById("wrapEncrypt").setAttribute("style", "display:none;");
   document.querySelector(".wrap1-cryptDecryptControls").setAttribute("style", "display:none;");
-  document.querySelector(".cCenter,.cCenterB").setAttribute("style", "display:none;");
+  document.querySelector(".cCenter,.cCenterD").setAttribute("style", "display:none;");
   document.getElementById("wrapPassProtectInterface").setAttribute("style", "display:flex;");
   this.setAttribute("style", "background-color:#3F00FF;");
   document.getElementById("generateInterface").setAttribute("style", "background-color:#333;");
@@ -905,8 +1170,6 @@ document.getElementById("passProtectInterface").addEventListener("click", functi
 /* START CODE FOR ENCRYPT DECRYPT RSA-OAEP */
 
 document.getElementById("myPubPrivKeyTXT").addEventListener("change", getPrivPubKey);
-//document.getElementById("myPublicKeyTXT").addEventListener("change", getPubKey);
-//document.getElementById("myPrivateKeyTXT").addEventListener("change", getPrivKey);
 document.getElementById("myCryptedFile").addEventListener("change", getCryptedDisplay);
 
 document.getElementById("myFileToBeCryptedRSAOAEP").addEventListener("change", w3GetInputEncryptWithRSAOAEP);
@@ -919,8 +1182,7 @@ const content = document.querySelector(".content");
 
     const encryptButton = document.querySelector(".encrypt-button");
     encryptButton.addEventListener("click", () => {
-      w3GetInputEncryptWithRSAOAEP(mypubKey,fromTypedText=true)
-      //encryptMessage(mypubKey);
+      w3GetInputEncryptWithRSAOAEP(mypubKey,fromTypedText=true);
     });
 
 /*  Note:
@@ -946,7 +1208,7 @@ function chunkBuffer(buffer, chunkSize) {
 async function w3GetInputEncryptWithRSAOAEP(key,fromTypedText=false) {
 
    if(isDoingTask > 0){ alert('You can\'t run more than one task at a time.\nWait for the current task to finish or refresh your browser to cancel it.'); return; }
-   if (!mypubKey) { alert('Load your secrets keys first'); document.querySelector('input[id="myFileToBeCryptedRSAOAEP"]').value = ''; return; }
+   if (!mypubKey) { alert('Load the Public key first'); document.querySelector('input[id="myFileToBeCryptedRSAOAEP"]').value = ''; return; }
 
    var file; num0=0; ciphertextChunks='';
 
@@ -960,8 +1222,19 @@ async function w3GetInputEncryptWithRSAOAEP(key,fromTypedText=false) {
 
    if(!file){ alert('No data.'); return; }
 
- /* Push and encrypt the file name and mime info (like for the pass encryption) */
- let mimeFname = file.type + '#||#' + file.name;
+     let d = new Date();
+     let options = { year:"numeric",month:"short",day:"numeric",hour:"numeric",minute:"numeric",second:"numeric" };
+     let dr = d.toLocaleDateString(undefined, options); //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
+     dr = dr.replace(/ |,/g, '-');
+
+   /* file name and mime */
+    let mimeFname;
+    if(typeof(file.type) == "undefined"){ // from typed text
+     mimeFname = 'text/plain#||#'+dr+'_message.txt';
+    } else {
+     mimeFname = file.type + '#||#' + file.name;
+    }
+
  let mfUint8 = str2ab(window.btoa(mimeFname));
 
  const reader = new FileReader();
@@ -977,7 +1250,7 @@ async function w3GetInputEncryptWithRSAOAEP(key,fromTypedText=false) {
 
     if( !bufferchunks ) { alert('No data.'); return; }
 
-    if (!key){ alert('Upload your secret keys before encrypting'); return; }
+    if (!key){ alert('Upload the Private key before encrypting'); return; }
     document.getElementById("w3downloadEncryptedMsg").setAttribute("style", "display:none;");
     document.getElementById("loader").setAttribute("style", "display:inline-block");
     document.querySelector(".encrypt-button").setAttribute("value", "Encrypting");
@@ -1027,13 +1300,8 @@ async function w3GetInputEncryptWithRSAOAEP(key,fromTypedText=false) {
 
      document.getElementById("w3downloadEncryptedMsg").setAttribute("style", "display:block;");
 
-     const d = new Date();
-     const options = { year:"numeric",month:"short",day:"numeric",hour:"numeric",minute:"numeric",second:"numeric" };
-     let dr = d.toLocaleDateString(undefined, options); //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
-     dr = dr.replace(/ |,/g, '-');
-      //let downfileName = 'EncryptedMSG__'+dr+'.txt';
-      let fn = typeof(file.name) == 'undefined' ? 'myEncryptedText.txt' : file.name+'.txt';
-      let downfileName = 'EncryptedMSG_'+dr+'-_-'+fn;
+      let fn = typeof(file.name) == 'undefined' ? 'encryptedText.txt' : file.name;
+      let downfileName = 'rsaOAEP_'+dr+'__'+fn+'.txt';
       // check the filename is < than 255 and removes the previous excess
       downfileName = downfileName.length > 255 ? downfileName.slice(-255) : downfileName;
       document.getElementById("w3downloadEncryptedMsg").setAttribute("download", downfileName);
@@ -1044,9 +1312,10 @@ async function w3GetInputEncryptWithRSAOAEP(key,fromTypedText=false) {
       document.getElementById("loader").setAttribute("style", "display:none");
       document.querySelector(".cText").setAttribute("style", "display:none");
 
-      document.querySelector(".encrypt-button").setAttribute("value", "Encrypt");
+      document.querySelector(".encrypt-button").setAttribute("value", "Encrypt text");
       document.querySelector(".encrypt-button").removeAttribute("disabled");
       document.getElementById("waitEncryption").setAttribute("style", "display:none");
+      document.querySelector('input[id="myFileToBeCryptedRSAOAEP"]').value = null;
       clearInterval(timer);
     },1000);
    }
@@ -1089,16 +1358,18 @@ function getCryptedDisplay() {
   const decryptedValue = document.querySelector(".decrypted-value");
   decryptedValue.textContent = cipher = '';
 
-  if (!myprivKey || myprivKey == ''){ alert('Load your secrets keys first'); return; }
+  if (!myprivKey || myprivKey == ''){ alert('Load the Private key first');
+          pb.setAttribute("style", "display:none");
+          document.getElementById("myCryptedFile").value = '';
+          return; }
 
   const file = fileInputToDecrypt.files[0];
    if(!file){ alert('No data.');  return; }
 
      const enc = new TextEncoder();
      const reader = new FileReader();
-   reader.readAsArrayBuffer(file);
-   reader.addEventListener("loadend", () => {
-   //let bufferchunks = ab2str(reader.result); // this do not work for large buffer
+     reader.readAsArrayBuffer(file);
+     reader.addEventListener("loadend", () => {
      let bufferchunks = dec.decode(reader.result); // latin1: see above explain on TextDecoder('latin1'); -> used to manage large files
 
        let getSplits = bufferchunks.split(/\|/);
@@ -1111,15 +1382,22 @@ function getCryptedDisplay() {
        var pb = document.getElementById("DprogressBar");
        var tp = document.getElementById("Dtprogress");
 
-   try {
     (function loop() {
 
      isDoingTask = 1;
      var timeout = setTimeout(() => {
 
       (async () => {
-        ciphertext = Uint8Array.fromBase64(getSplits[num0]);
-        c = await decryptMessageFile(myprivKey,ciphertext);
+        try {
+         ciphertext = Uint8Array.fromBase64(getSplits[num0]);
+        } catch(e){
+          pb.setAttribute("style", "display:none");
+          isDoingTask = 0;
+          alert('Decryption error: '+e);
+          alert('The page will be now reloaded');
+          location.reload(); }
+
+      c = await decryptMessageFile(myprivKey,ciphertext);
         if(ck==0){
          fname = window.atob(ab2str(c));
          ck++;
@@ -1176,11 +1454,7 @@ function getCryptedDisplay() {
       }
 
     })();
-   } catch(e){
-        pb.setAttribute("style", "display:none");
-        isDoingTask = 0;
-        alert('Decryption error: '+e);
-        return false; }
+
    }); // END "loadend"
 }
 
@@ -1193,40 +1467,53 @@ function getPrivPubKey(){
   const reader = new FileReader();
   let k = reader.readAsText(file);
 
-    reader.addEventListener("loadend", () => {
-    //console.log(reader.result);
+  reader.addEventListener("loadend", () => {
     let kp = reader.result.trim();
     let pubStart = kp.split('-----BEGIN PUBLIC KEY-----');
     let privStart = kp.split('-----BEGIN PRIVATE KEY-----');
     let myprivKeyRes,mypubKeyRes;
 
-  if(privStart[0] == ''){
-   myprivKeyRes = pubStart[0];
+   if(privStart[0] == ''){
+    myprivKeyRes = pubStart[0];
 
-   let pubKey = privStart[1].split('-----END PRIVATE KEY-----');
-   mypubKeyRes = pubKey[1];
-  } else {
-   mypubKeyRes = privStart[0];
+    let pubKey = privStart[1].split('-----END PRIVATE KEY-----');
+    mypubKeyRes = pubKey[1];
+   } else {
+    mypubKeyRes = privStart[0];
 
    if(pubStart[1] == undefined) { alert('Upload the correct file containing the Public and Private key!');
     document.querySelector('input[name="myPubPrivKeyTXT"]').value = ''; return; }
-   let privKey = pubStart[1].split('-----END PUBLIC KEY-----');
-   myprivKeyRes = privKey[1];
-  }
+    let privKey = pubStart[1].split('-----END PUBLIC KEY-----');
+    myprivKeyRes = privKey[1];
 
-    let promisePubKey = Promise.resolve(importRsaKey(mypubKeyRes));
-    promisePubKey.then((value) => {
-    /*console.log('mypubKey value');
-    console.log(value);*/
-     mypubKey = value;
-    });
+   }
 
-    let promisePKey = Promise.resolve(importPrivateKey(myprivKeyRes));
-    promisePKey.then((value) => {
-     /*console.log('myprivKey');
-     console.log(value);*/
-     myprivKey = value;
-    });
+   // Can be loaded only the Private Key
+    if(mypubKeyRes != ''){
+     let promisePubKey = Promise.resolve(importRsaKey(mypubKeyRes));
+     promisePubKey.then((value) => {
+      mypubKey = value;
+      // About loaded OAEP Pub key <summary> INFO
+      document.getElementById("pubKeyState").textContent='Public key loaded';
+      document.getElementById('myPubPrivKeyTXT').value = null;
+      document.getElementById("pubKeyState").setAttribute("style", "text-decoration: underline double #4BEA43 2px;");
+      document.getElementById("pubKeyInfoOAEP").textContent=mypubKeyRes;
+     });
+    }
+
+    // Can be loaded only the Public Key
+    if(myprivKeyRes != ''){
+     let promisePKey = Promise.resolve(importPrivateKey(myprivKeyRes));
+     promisePKey.then((value) => {
+      myprivKey = value;
+      // About loaded OAEP Priv key <summary> INFO
+      document.getElementById("privKeyState").textContent='Private key loaded';
+      document.getElementById('myPubPrivKeyTXT').value = null;
+      document.getElementById("privKeyState").setAttribute("style", "text-decoration: underline double #4BEA43 2px;");
+      document.getElementById("privKeyInfoOAEP").textContent=myprivKeyRes;
+
+     });
+    }
 
   });
 }
@@ -1263,7 +1550,7 @@ function getPubKey() {
   });
 }
 
-/* START ABOUT crypto PASSWORD ENCRYPT DECRYPT functions only */
+/* START crypto AES GCM PASSWORD ENCRYPT DECRYPT functions only */
 
 // Get stored cypered
 function arrayBufferToHex(buffer) {
@@ -1287,22 +1574,6 @@ async function getCryptoKey(password) {
         { name: 'PBKDF2' },
         false,
         ['deriveKey']
-    );
-}
-
-async function deriveKey(password, salt) {
-    const cryptoKey = await getCryptoKey(password);
-    return crypto.subtle.deriveKey(
-        {
-            name: 'PBKDF2',
-            salt: salt,
-            iterations: 700000, // search for " pbkdf2 2026 iterations recommendation" on the www
-            hash: 'SHA-256',
-        },
-        cryptoKey,
-        { name: 'AES-GCM', length: 256 },
-        false,
-        ['encrypt', 'decrypt']
     );
 }
 
@@ -1340,7 +1611,19 @@ async function encryptText(text, passw, mimeFname) {
 
   }
 
+
 async function decryptText(encryptedData, password) {
+
+
+       if(! password || password == ''){
+       password = prompt("Enter Password", "");
+      }
+
+      if(! password || password == ''){
+       document.getElementById("myFileToBeCryptedAESGCM").value = '';
+       alert("You have to enter a Password");
+       return;
+      }
 
     if (encryptedData == undefined || encryptedData == ''){ alert('No data to be decrypted!');return; }
     const { cipherText, iv, salt } = encryptedData;
@@ -1352,6 +1635,7 @@ async function decryptText(encryptedData, password) {
         hexToArrayBuffer(cipherText)
     ).catch((e) => {
        passw = '';
+       document.getElementById("prelAESGCMdecrypt").setAttribute("style", "display:none");
        document.getElementById("myFileToBeDecryptedAESGCM").value = '';
        alert('Wrong Password (or wrong cipherText format) file not decrypted\n'+e);
       });
@@ -1370,217 +1654,244 @@ function eencryptText(text, passw, mimeFname) {
      let r = new Blob([j], {type: 'text/plain'});
 
      let txtFileUrl = window.URL.createObjectURL(r);
-     document.getElementById("w3CKeysOrTextEncrypted").setAttribute("style", "display:block;padding:10px;");
-     document.getElementById("w3CKeysOrTextEncrypted").setAttribute("href", txtFileUrl);
+     document.getElementById("w3AESGCMencryptedFile").setAttribute("style", "display:block;padding:10px;");
+     document.getElementById("w3AESGCMencryptedFile").setAttribute("href", txtFileUrl);
 
     });
 
 }
-
-/*function ddecryptText(text, passw) {
- (async () => {
-    // Decrypt
-    decryptedText = await decryptText(encryptedData, passw);
-    console.log('Decrypted Text:', decryptedText);
- })();
-}*/
 
   const myFileToBeCryptedAESGCM = document.querySelector('input[name="myFileToBeCryptedAESGCM"]');
   const myFileToBeDecryptedAESGCM = document.querySelector('input[name="myFileToBeDecryptedAESGCM"]');
+  const passwordAESGCMfromFile = document.querySelector('input[name="passwordAESGCMfromFile"]');
 
- async function w3GetInputEncryptWithPass(){
+(function() {
+	
+	// AESGCM encrypt/decrypt Blob and Worker
 
-  const file = myFileToBeCryptedAESGCM.files[0];
+var code = document.getElementById('worker-script').textContent;
+var encryptionWorker;
+var password='';
+var dec = new TextDecoder('latin1');
+var enc = new TextEncoder();
 
-   if(!file){  return; }
+function AESGCMmanageWorkerRestart(){
+ var b = new Blob([code], { type: 'application/javascript' });
+ var workerURL = URL.createObjectURL(b);
+ var encryptionWorker = new Worker(workerURL);
+ return encryptionWorker;
+}
 
-      if(! passw || passw == ''){
-       passw = prompt("Set Password", "");
+async function loadPassword(){
+
+  if (passwordAESGCMfromFile) {
+   // Read the password from the selected file
+   let passFile = passwordAESGCMfromFile.files[0];
+    password = await passFile.text();
+    password = password.trim();
+    passwordAESGCMfromFile.value = null;
+    document.getElementById("AESGCMpassState").style.display = "block";
+  }
+}
+
+async function startMultiEncryptionAESGCM() {
+
+    encryptionWorker = AESGCMmanageWorkerRestart();
+    var files = Array.from(myFileToBeCryptedAESGCM.files);
+
+    if (!files.length) return;
+
+    password='';
+
+      if(! password || password == ''){
+       // Provide a very strong cryptographically secure password by default
+       password = prompt("Set Password", getRandPass(getRandomNum(150,200)));
       }
 
-      if(! passw || passw == ''){
+      if(! password || password == ''){
        document.getElementById("myFileToBeCryptedAESGCM").value = '';
        alert("You have to set a Password");
        return;
       }
 
-    document.getElementById("prelAESGCMencrypt").setAttribute("style", "display:inline-block");
+    // Show Preloader
+    document.getElementById("prelAESGCMencrypt").style.display = "flex";
 
-    var mimeFname = file.type + '#||#' + file.name;
+    // Prepare data for the worker without freezing the UI
+    const fileBuffers = [];
+    const transferableBuffers = [];
 
-     const reader = new FileReader();
-     reader.readAsArrayBuffer(file);
-     reader.addEventListener("loadend", () => {
-  try {
-     let p = Promise.resolve(encryptText(arrayBufferToHex(reader.result), passw, mimeFname));
-     p.then((value) => {
-     passw = '';
-     let j = JSON.stringify(value);
-     let r = new Blob([j], {type: 'text/plain'});
-     let txtFileUrl = window.URL.createObjectURL(r);
-     document.getElementById("w3CKeysOrTextEncrypted").setAttribute("style", "display:block;padding:10px;");
-     document.getElementById("w3CKeysOrTextEncrypted").setAttribute("href", txtFileUrl);
-      const d = new Date();
-      const options = { year:"numeric",month:"short",day:"numeric",hour:"numeric",minute:"numeric",second:"numeric" };
-      let dr = d.toLocaleDateString(undefined, options); //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
-      dr = dr.replace(/ |,/g, '-');
-      let downfileName = 'EncryptedFILE__'+dr+'.txt';
-      document.getElementById("myFileToBeCryptedAESGCM").value = null;
-      document.getElementById("prelAESGCMencrypt").setAttribute("style", "display:none");
-      document.getElementById("w3CKeysOrTextEncrypted").setAttribute("download", downfileName);
-    });
-    } catch(e){
-        document.getElementById("prelAESGCMencrypt").setAttribute("style", "display:none");
-        document.getElementById("myFileToBeCryptedAESGCM").value = null;
-        alert("The file appears to be unsuitable for processing.\nUpload the file to decrypt.");
-        //console.log(e);
-        return false; }
+    for (const f of files) {
+        const buf = await f.arrayBuffer();
+        fileBuffers.push({ name: f.name, buffer: buf });
+        transferableBuffers.push(buf);
+    }
 
+    // Send to worker
+    encryptionWorker.postMessage({
+        action: 'ENCRYPT',
+        files: fileBuffers,
+        password: enc.encode(password)
+    }, transferableBuffers); // Transferring buffers means zero-copy
+
+     let pwd = new Blob([password], {type: 'text/plain'}); // to store the plain text password
+
+    encryptionWorker.onmessage = (e) => {
+
+      if (e.data.type === 'DONE') {
+        password='';
+            document.getElementById("prelAESGCMencrypt").style.display = "none";
+            let downloadUrl = URL.createObjectURL(new Blob([e.data.result]));
+
+       let pwdFileUrl = window.URL.createObjectURL(pwd);
+
+       document.getElementById("w3AESGCMencryptedFile").setAttribute("style", "display:block;padding:10px;");
+       document.getElementById("w3AESGCMencryptedFile").setAttribute("href", downloadUrl);
+       const d = new Date();
+       const options = { year:"numeric",month:"short",day:"numeric",hour:"numeric",minute:"numeric",second:"numeric" };
+       let dr = d.toLocaleDateString(undefined, options); //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
+       dr = dr.replace(/ |,/g, '-');
+       let downfileName = 'encryptedFileGCM__'+dr+'.txt';
+       let passdownName = 'password_of_encryptedFileGCM_'+dr+'.txt';
+       document.getElementById("myFileToBeCryptedAESGCM").value = null;
+       document.getElementById("prelAESGCMencrypt").setAttribute("style", "display:none");
+       document.getElementById("w3AESGCMencryptedFile").setAttribute("download", downfileName);
+
+       document.getElementById("w3AESGCMpwdDown").setAttribute("style", "display:block;padding:10px;");
+       document.getElementById("w3AESGCMpwdDown").setAttribute("href", pwdFileUrl);
+       document.getElementById("w3AESGCMpwdDown").setAttribute("download", passdownName);
+
+            pwd='';
+            encryptionWorker.terminate();
+      } else if (e.data.type === 'ERROR') {
+            document.getElementById("prelAESGCMencrypt").style.display = "none";
+            alert("Error: " + e.data.msg);
+        }
+    };
+}
+
+async function startMultiDecryptionAESGCM() {
+
+    const file = myFileToBeDecryptedAESGCM.files[0];
+
+       if(! password || password == ''){
+       password = prompt("Enter password", "");
+      }
+
+      if(! password || password == ''){
+       document.getElementById("myFileToBeCryptedAESGCM").value = '';
+       alert("You have to enter a Password");
+       return;
+      }
+
+    if (!file || !password) return;
+
+    // Show Decrypt Preloader
+    document.getElementById("prelAESGCMdecrypt").style.display = "flex";
+    const buffer = await file.arrayBuffer();
+
+    encryptionWorker = AESGCMmanageWorkerRestart();
+    // Start Worker with Transferable
+    encryptionWorker.postMessage({
+        action: 'DECRYPT',
+        buffer: buffer,
+        password: enc.encode(password)
+    }, [buffer]);
+
+
+    encryptionWorker.onmessage = (e) => {
+        if (e.data.type === 'DONE_DECRYPT') {
+        	
+            const { archiveDate, files } = e.data.result;
+
+          /*files.forEach(fileObj => {
+                const blob = new Blob([fileObj.buffer], { type: 'application/octet-stream' });
+                const url = URL.createObjectURL(blob);
+
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = fileObj.name;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                // TODO Cleanup MEMORY
+                setTimeout(() => URL.revokeObjectURL(url), 10000);
+                setTimeout(() => URL.revokeObjectURL(url), 1000);
+            });*/
+
+       var options = { year:"numeric",month:"short",day:"numeric",hour:"numeric",minute:"numeric",second:"numeric" };
+       let dr = archiveDate.toLocaleDateString(undefined, options); //https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toLocaleDateString
+       dr = dr.replace("-", " ").replace("-", " ").replace("--", " at ").replace(",", "");
+       //console.log(dr);
+       document.getElementById("AESGCMfileEncryptedTimeShow").textContent=dr;
+       document.getElementById("AESGCMfileEncryptedTime").setAttribute("style", "display:block;");
+
+   files.forEach(fileObj => {
+
+     let blob = new Blob([fileObj.buffer], { type: 'application/octet-stream' });
+     let url = URL.createObjectURL(blob);
+      let p = document.createElement("p");
+      let a = document.createElement('a');
+     a.href = url;
+     a.download = fileObj.name;
+     a.textContent = fileObj.name;
+     p.append(a);
+     document.getElementById("listAESGCMdecryptedFiles").append(p);
+
+     // Clean up memory after a short delay
+     //setTimeout(() => URL.revokeObjectURL(url), 100);
    });
+
+     password='';
+     document.getElementById("prelAESGCMdecrypt").style.display = "none";
+     document.getElementById("AESGCMpassState").style.display = "none";
+     encryptionWorker.terminate();
+
+    } else if (e.data.type === 'ERROR') {
+            alert("Error: " + e.data.msg);
+            document.getElementById("prelAESGCMdecrypt").style.display = "none";
+        }
+    };
 }
+   // Ensures that even if another script (like a malicious browser extension) is running on the page, it cannot access variables
+    window.appEngineAESGCM = {
+        loadPassword: () => loadPassword(),
+        encrypt: () => startMultiEncryptionAESGCM('ENCRYPT'),
+        decrypt: () => startMultiDecryptionAESGCM('DECRYPT')
+    };
 
-function w3GetInputDecryptWithPass(){
+})(); // END (function() { WORKER
 
-   const file = myFileToBeDecryptedAESGCM.files[0];
-   if(!file){  return; }
-
-   const reader = new FileReader();
-   reader.readAsArrayBuffer(file);
-   reader.addEventListener("loadend", () => {
-
-  try {
-
-   let r = JSON.parse(dec.decode(reader.result));
-
-   if(! passw || passw == ''){
-    passw = prompt("Password", "")
-   }
-
-   if(!passw || passw == ''){
-    document.getElementById("myFileToBeDecryptedAESGCM").value = '';
-    alert("Please provide a Password. Process aborted");
-    return;
-   }
-
-   document.getElementById("prelAESGCMdecrypt").setAttribute("style", "display:inline-block");
-
-   let p = Promise.resolve(decryptText(r, passw));
-
-   p.then((value) => {
-
-    passw = '';
-
-    let valueChunk = value.split('|_|-_-|_|');
-    value = valueChunk[0];
-    let fileMimeName = valueChunk[1].split('#||#');
-    w3myfmime = fileMimeName[0];
-    w3myfname = fileMimeName[1];
-
-   (async () => {
-
-    let tst = new Blob([hexToArrayBuffer(value)], {type: 'text/plain'});
-     const read = new FileReader();
-     read.readAsArrayBuffer(tst);
-     read.onload = (evt) =>
-     {
-       let rr = new Blob([evt.target.result], {type: w3myfmime});
-       let txtF = window.URL.createObjectURL(rr);
-
-       if( imageMimeTypes.includes(w3myfmime) )
-       {
-        // Detect the img size
-        const img = new Image();
-        img.src = txtF;
-        img.onload = () => {
-         document.getElementById("videoVOUT").setAttribute("style", "display:none;");
-         document.getElementById("destImg").setAttribute("style", "display:inline-block;");
-         document.getElementById("destImg").setAttribute("width", img.width);
-         document.getElementById("destImg").setAttribute("height", img.height);
-         document.getElementById("destImg").src = txtF;
-        };
-       } else if ( videoMimeTypes.includes(w3myfmime) )
-       {
-        document.getElementById("destImg").setAttribute("style", "display:none;");
-        document.getElementById("videoVOUT").setAttribute("style", "display:inline-block;");
-        document.getElementById("videoVOUT").src = txtF;
-        document.getElementById("videoVOUT").setAttribute("type", w3myfmime);
-       } else if ( w3myfmime == 'text/plain' )
-       {
-        document.getElementById("messageCryptPass").value = dec.decode(hexToArrayBuffer(value));
-       }
-        document.getElementById("prelAESGCMdecrypt").setAttribute("style", "display:none");
-        document.getElementById("w3decryptedAESGCM").setAttribute("style", "display:block;");
-        // Download link
-        document.getElementById("w3decryptedAESGCM").setAttribute("href", txtF);
-        document.getElementById("w3decryptedAESGCM").setAttribute("download", w3myfname);
-        document.getElementById("w3decryptedAESGCM").textContent=w3myfname;
-       }
-   })();
-  });
-  } catch(e){
-        document.getElementById("prelAESGCMdecrypt").setAttribute("style", "display:none");
-        document.getElementById("myFileToBeDecryptedAESGCM").value = null;
-        alert("The file appears to be unsuitable for processing.\nUpload the file to decrypt.");
-        //console.log(e);
-        return false; }
- })
-}
-
-
-document.getElementById("encryptAES-GCM").addEventListener("click", function(){
-
-      if(! passw ){
-       passw = prompt("Set Password", "");
-      }
-
-      if(! passw ){
-       document.getElementById("myFileToBeCryptedAESGCM").value = '';
-       alert("You have to set a Password");
-       return;
-      }
-
-   let txt = document.getElementById("messageCryptPass").value;
-
-   const byteA = enc.encode(txt);
-   const buffer = byteA.buffer;
-
-    let p = Promise.resolve(encryptText(arrayBufferToHex(buffer), passw, 'text/plain' + '#||#myEncryptedText.txt'));
-    p.then((value) => {
-     passw = '';
-     let j = JSON.stringify(value);
-     let r = new Blob([j], {type: 'text/plain'});
-     let txtFileUrl = window.URL.createObjectURL(r);
-     document.getElementById("w3CKeysOrTextEncrypted").setAttribute("style", "display:block;");
-     document.getElementById("w3CKeysOrTextEncrypted").setAttribute("href", txtFileUrl);
-    });
-
-});
 
 document.getElementById("myFileToBeCryptedAESGCM").addEventListener("change", function(){
-  w3GetInputEncryptWithPass();
+  appEngineAESGCM.encrypt();
 });
 
 document.getElementById("myFileToBeDecryptedAESGCM").addEventListener("change", function(){
-  w3GetInputDecryptWithPass();
+  appEngineAESGCM.decrypt();
 });
+
+document.getElementById("passwordAESGCMfromFile").addEventListener("change", function(){
+  appEngineAESGCM.loadPassword();
+});
+
+/* END ABOUT crypto AES GCM PASSWORD ENCRYPT DECRYPT functions only */
 
 document.getElementById("decEncBrowserRate").addEventListener("change", function(){
   delay = this.value;
 });
 
-
-/* END ABOUT crypto PASSWORD ENCRYPT DECRYPT functions only */
-
-
-
 // reset values on page load
+document.getElementById("wrapPrivKeyInfoOAEP").setAttribute("style", "display:none;");
+document.getElementById("pubKeyInfoOAEP").textContent='';
+document.getElementById("privKeyInfoOAEP").textContent='';
 document.getElementById("filesLoad").reset();
 document.querySelector('input[id="myFileToBeCryptedRSAOAEP"]').value = '';
 document.getElementById("myFileToBeCryptedAESGCM").value = '';
 document.getElementById("myFileToBeDecryptedAESGCM").value = '';
 document.getElementById("rsa-oaep-message").value = '';
-document.getElementById("messageCryptPass").value = '';
-document.querySelector(".cCenterB").setAttribute("style", "display:none;");
+//document.getElementById("messageCryptPass").value = '';
+document.querySelector(".cCenterD").setAttribute("style", "display:none;");
 document.querySelector(".decrypted").setAttribute("style", "display:none;");
 document.getElementById("w3downloadEncryptedMsg").setAttribute("style", "display:none;");
 document.getElementById("w3downloadPubPriv_CKeys").setAttribute("style", "display:none;");
@@ -1588,12 +1899,12 @@ document.getElementById("wrapGenCryptoKeys").setAttribute("style", "display:none
 document.getElementById("wrapPassProtectInterface").setAttribute("style", "display:none;");
 document.getElementById("cryptInterface").setAttribute("style", "background-color:#000");
 // About Pass decrypt files output
-document.getElementById("destImg").setAttribute("style", "display:none;");
-document.getElementById("videoVOUT").setAttribute("style", "display:none;");
+//document.getElementById("destImg").setAttribute("style", "display:none;");
+//document.getElementById("videoVOUT").setAttribute("style", "display:none;");
 //document.getElementById("wrapMessageCryptPass").setAttribute("style", "display:none;");
 //document.getElementById("backBlackIn").setAttribute("style", "display:none;");
 </script>
 
-<div style="text-align:center;padding:20px">&copy; since 2025 <a href="https://axew3.com" target="_blank">axew3.com</a><br><a href="https://www.gnu.org/licenses/gpl-3.0.en.html" target="_blank">General Public License v3.0</a><br><b><a href="http://www.paypal.me/alessionanni/" rel="nofollow">Donations goes here</a></b></div>
+<div style="background-color:#000;color:#FFF;text-align:center;padding:20px">&copy; since 2025 <a href="https://axew3.com" target="_blank">axew3.com</a><br><a href="https://www.gnu.org/licenses/gpl-3.0.en.html" target="_blank">General Public License v3.0</a><br><b>&#9825; <a href="http://www.paypal.me/alessionanni/" rel="nofollow">Special thanks goes here</a></b></div>
 </body>
 </html>
