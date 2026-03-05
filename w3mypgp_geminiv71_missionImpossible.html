@@ -2065,7 +2065,7 @@ async function w3DecryptWithRSAOAEP() {
 
  } // END for (const fileObj of rfiles) {
 
-   if (encryptionWorker){ encryptionWorker.terminate() };
+   if (encryptionWorker){ encryptionWorker.terminate(); }
        document.getElementById("loader").style.display = "none";
        isDoingTask = 0;
 
